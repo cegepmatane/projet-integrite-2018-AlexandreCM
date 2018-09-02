@@ -1,25 +1,23 @@
 package vue;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import modele.Pokemon;
 
-public class VueAjouterPokemon extends Application {
+public class VueAjouterPokemon extends Scene {
 	
 	protected TextField nom;
 	protected TextField type;
 	protected TextField capacite;
 
-	@Override
-	public void start(Stage stade) throws Exception {
+	public VueAjouterPokemon() {
 		
-		VBox panneau = new VBox();	
+		super(new VBox(), 400, 400);
+		VBox panneau = (VBox) this.getRoot();
 		GridPane grillePokemon = new GridPane();
 		
 		nom = new TextField();
@@ -37,8 +35,6 @@ public class VueAjouterPokemon extends Application {
 		panneau.getChildren().add(new Label("Ajouter un Pokemon")); 
 		panneau.getChildren().add(grillePokemon);
 		panneau.getChildren().add(new Button("Enregistrer"));
-		stade.setScene(new Scene(panneau, 400, 400));
-		stade.show();
 		
 	}
 	

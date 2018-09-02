@@ -1,22 +1,21 @@
 package vue;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import modele.Pokemon;
 
-public class VuePokemon extends Application {
+public class VuePokemon extends Scene {
+	
 	protected Label nom;
 	protected Label type;
 	protected Label capacite;
 
-	@Override
-	public void start(Stage stade) throws Exception {
+	public VuePokemon() {
 		
-		Pane panneau = new Pane();
+		super(new Pane(),400,400);
+		Pane panneau = (Pane) this.getRoot();	
 		GridPane grillePokemon = new GridPane();
 		
 		nom = new Label("Carapuce");
@@ -33,8 +32,6 @@ public class VuePokemon extends Application {
 			
 	
 		panneau.getChildren().add(grillePokemon);
-		stade.setScene(new Scene(panneau, 400, 400));
-		stade.show();
 		
 		//// TEST ////
 		Pokemon pokemon = new Pokemon("Salameche", "Feu", "Flameche");

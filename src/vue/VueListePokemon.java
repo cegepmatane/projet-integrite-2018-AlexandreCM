@@ -2,22 +2,20 @@ package vue;
 
 import java.util.ArrayList;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import modele.Pokemon;
 
-public class VueListePokemon extends Application {
+public class VueListePokemon extends Scene {
 	
 	protected GridPane grillePokemon;
 
-	@Override
-	public void start(Stage stade) throws Exception {
+	public VueListePokemon() {
 		
-		Pane panneau = new Pane();	
+		super(new Pane(),400,400);
+		Pane panneau = (Pane) this.getRoot();	
 		grillePokemon = new GridPane();
 		
 		/// TEST ///
@@ -29,8 +27,6 @@ public class VueListePokemon extends Application {
 		this.afficherListePokemon(listePokemon);
 		
 		panneau.getChildren().add(grillePokemon);
-		stade.setScene(new Scene(panneau, 400, 400));
-		stade.show();
 		
 	}
 	
