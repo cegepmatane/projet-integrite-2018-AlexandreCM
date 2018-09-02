@@ -29,13 +29,9 @@ public class VuePokemon extends Scene {
 		capacite = new Label("Bulle d'eau");
 		grillePokemon.add(new Label("Capacite : "), 0, 2);
 		grillePokemon.add(capacite, 1, 2);
-			
 	
 		panneau.getChildren().add(grillePokemon);
 		
-		//// TEST ////
-		Pokemon pokemon = new Pokemon("Salameche", "Feu", "Flameche");
-		this.afficherPokemon(pokemon);
 	}
 	
 	public void afficherPokemon(Pokemon pokemon) {

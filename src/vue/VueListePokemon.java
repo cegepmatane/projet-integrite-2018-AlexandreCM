@@ -18,14 +18,6 @@ public class VueListePokemon extends Scene {
 		Pane panneau = (Pane) this.getRoot();	
 		grillePokemon = new GridPane();
 		
-		/// TEST ///
-		ArrayList<Pokemon> listePokemon = new ArrayList<Pokemon>();
-		listePokemon.add(new Pokemon("Carapuce", "Eau", "Bulled'eau"));
-		listePokemon.add(new Pokemon("Salameche", "Feu", "Flameche"));
-		listePokemon.add(new Pokemon("Bulbizare", "Plante", "Fouet liane"));
-		
-		this.afficherListePokemon(listePokemon);
-		
 		panneau.getChildren().add(grillePokemon);
 		
 	}
