@@ -8,6 +8,8 @@ import modele.Pokemon;
 
 public class NavigateurDesVues extends Application {
 	
+	private Stage stade;
+	
 	private VuePokemon vuePokemon;
 	private VueListePokemon vueListePokemon;
 	private VueAjouterPokemon vueAjouterPokemon;
@@ -33,8 +35,45 @@ public class NavigateurDesVues extends Application {
 
 	@Override
 	public void start(Stage stade) throws Exception {
+		
+		this.stade = stade;
+		//stade.setScene(this.vuePokemon);
+		//stade.show();
+		
+		//// TEST ////
+		//this.naviguerVersVuePokemon();
+		this.naviguerVersVueListePokemon();
+		//this.naviguerVersVueAjouterPokemon();
+		
+	}
+	
+	//// getVues
+	public VuePokemon getVuePokemon() {
+		return vuePokemon;
+	}
+ 	
+	public VueListePokemon getVueListePokemon() {
+		return vueListePokemon;
+	}
+	
+	public VueAjouterPokemon getVueAjouterPokemon() {
+		return vueAjouterPokemon;
+	}
+ 	
+	//// naviguerVers
+	public void naviguerVersVuePokemon() {
 		stade.setScene(this.vuePokemon);
 		stade.show();
+	}
+	
+	public void naviguerVersVueListePokemon() {
+		stade.setScene(this.vueListePokemon);
+		stade.show();		
+	}
+	
+	public void naviguerVersVueAjouterPokemon() {
+		stade.setScene(this.vueAjouterPokemon);
+		stade.show();				
 	}
 
 }
