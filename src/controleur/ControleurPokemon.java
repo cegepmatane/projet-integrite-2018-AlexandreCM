@@ -16,8 +16,11 @@ public class ControleurPokemon {
 	private VueListePokemon vueListePokemon = null;
 	private VueAjouterPokemon vueAjouterPokemon = null;
 	
-	public ControleurPokemon(NavigateurDesVues navigateur) {
+	public ControleurPokemon() {
 		System.out.println("Initialisation du controleur");
+	}
+	
+	public void activerVues(NavigateurDesVues navigateur) {
 		
 		this.navigateur = navigateur;
 		
@@ -40,5 +43,14 @@ public class ControleurPokemon {
 		// this.navigateur.naviguerVersVueListePokemon();
 		// this.navigateur.naviguerVersVueAjouterPokemon();
 	}
+	
+	// SINGLETON DEBUT
+	private static ControleurPokemon instance = null;
+	
+	public static ControleurPokemon getInstance() {
+		if(null == instance) instance = new ControleurPokemon();
+		return instance;
+	}
+	// SINGLETON FINI
 	
 }

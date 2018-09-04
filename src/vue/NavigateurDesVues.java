@@ -9,7 +9,7 @@ import modele.Pokemon;
 
 public class NavigateurDesVues extends Application {
 	
-	private ControleurPokemon controleur;
+	private ControleurPokemon controleur = null;
 	private Stage stade;
 	
 	private VuePokemon vuePokemon = null;
@@ -32,7 +32,8 @@ public class NavigateurDesVues extends Application {
 		//stade.setScene(this.vuePokemon);
 		//stade.show();
 		
-		this.controleur = new ControleurPokemon(this);
+		this.controleur = ControleurPokemon.getInstance();
+		this.controleur.activerVues(this);
 	}
 	
 	//// getVues
