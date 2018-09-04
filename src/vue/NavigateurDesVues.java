@@ -2,20 +2,26 @@ package vue;
 
 import java.util.ArrayList;
 
+import controleur.ControleurPokemon;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import modele.Pokemon;
 
 public class NavigateurDesVues extends Application {
 	
+	private ControleurPokemon controleur;
 	private Stage stade;
 	
 	private VuePokemon vuePokemon;
 	private VueListePokemon vueListePokemon;
 	private VueAjouterPokemon vueAjouterPokemon;
 	
-	public NavigateurDesVues() 
-	{
+
+	
+	public NavigateurDesVues() {
+		
+		this.controleur = new ControleurPokemon(this);
+		
 		this.vuePokemon = new VuePokemon();
 		this.vueListePokemon = new VueListePokemon();
 		this.vueAjouterPokemon = new VueAjouterPokemon();
@@ -43,7 +49,7 @@ public class NavigateurDesVues extends Application {
 		//// TEST ////
 		//this.naviguerVersVuePokemon();
 		this.naviguerVersVueListePokemon();
-		//this.naviguerVersVueAjouterPokemon();
+		// this.naviguerVersVueAjouterPokemon();
 		
 	}
 	
