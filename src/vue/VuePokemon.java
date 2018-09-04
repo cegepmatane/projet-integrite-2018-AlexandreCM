@@ -14,9 +14,8 @@ public class VuePokemon extends Scene {
 
 	public VuePokemon() {
 		
-		super(new Pane(),400,400);
-		Pane panneau = (Pane) this.getRoot();	
-		GridPane grillePokemon = new GridPane();
+		super(new GridPane(),400,400);
+		GridPane grillePokemon = (GridPane) this.getRoot();
 		
 		nom = new Label("Carapuce");
 		grillePokemon.add(new Label("Nom : "), 0, 0);
@@ -29,8 +28,6 @@ public class VuePokemon extends Scene {
 		capacite = new Label("Bulle d'eau");
 		grillePokemon.add(new Label("Capacite : "), 0, 2);
 		grillePokemon.add(capacite, 1, 2);
-	
-		panneau.getChildren().add(grillePokemon);
 		
 	}
 	

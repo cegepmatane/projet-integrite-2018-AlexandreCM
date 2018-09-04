@@ -14,15 +14,14 @@ public class VueListePokemon extends Scene {
 
 	public VueListePokemon() {
 		
-		super(new Pane(),400,400);
-		Pane panneau = (Pane) this.getRoot();	
-		grillePokemon = new GridPane();
-		
-		panneau.getChildren().add(grillePokemon);
+		super(new GridPane(), 400,400);
+		grillePokemon = (GridPane) this.getRoot();
 		
 	}
 	
 	public void afficherListePokemon(ArrayList<Pokemon> listePokemon) {
+		
+		this.grillePokemon.getChildren().clear();
 		
 		int numero = 0;
 		this.grillePokemon.add(new Label("Nom"), 0, numero);
