@@ -2,6 +2,7 @@ package controleur;
 
 import java.util.ArrayList;
 
+import donnee.PokemonDAO;
 import modele.Pokemon;
 import vue.NavigateurDesVues;
 import vue.VueAjouterPokemon;
@@ -33,15 +34,14 @@ public class ControleurPokemon {
 		this.vuePokemon.afficherPokemon(pokemon);
 		
 		/// TEST ///
-		ArrayList<Pokemon> listePokemon = new ArrayList<Pokemon>();
-		listePokemon.add(new Pokemon("Carapuce", "Eau", "Bulled'eau"));
-		listePokemon.add(new Pokemon("Salameche", "Feu", "Flameche"));
-		listePokemon.add(new Pokemon("Bulbizare", "Plante", "Fouet liane"));
+		PokemonDAO pokemonDAO = new PokemonDAO();
+		ArrayList<Pokemon> listePokemon = pokemonDAO.listePokemon();
 		this.vueListePokemon.afficherListePokemon(listePokemon);
 		
-		this.navigateur.naviguerVersVuePokemon();
+		//// afficher une vue ////
+		//this.navigateur.naviguerVersVuePokemon();
 		this.navigateur.naviguerVersVueListePokemon();
-		this.navigateur.naviguerVersVueAjouterPokemon();
+		//this.navigateur.naviguerVersVueAjouterPokemon();
 	}
 	
 	// SINGLETON DEBUT

@@ -29,7 +29,7 @@ public class NavigateurDesVues extends Application {
 	public void start(Stage stade) throws Exception {
 		
 		this.stade = stade;
-		//stade.setScene(this.vuePokemon);
+		//this.stade.setScene(null);
 		//stade.show();
 		
 		this.controleur = ControleurPokemon.getInstance();
