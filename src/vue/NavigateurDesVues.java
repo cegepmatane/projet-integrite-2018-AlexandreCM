@@ -20,8 +20,6 @@ public class NavigateurDesVues extends Application {
 	
 	public NavigateurDesVues() {
 		
-		this.controleur = new ControleurPokemon(this);
-		
 		this.vuePokemon = new VuePokemon();
 		this.vueListePokemon = new VueListePokemon();
 		this.vueAjouterPokemon = new VueAjouterPokemon();
@@ -46,11 +44,7 @@ public class NavigateurDesVues extends Application {
 		//stade.setScene(this.vuePokemon);
 		//stade.show();
 		
-		//// TEST ////
-		//this.naviguerVersVuePokemon();
-		this.naviguerVersVueListePokemon();
-		// this.naviguerVersVueAjouterPokemon();
-		
+		this.controleur = new ControleurPokemon(this);
 	}
 	
 	//// getVues
