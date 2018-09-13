@@ -1,5 +1,6 @@
 package vue;
 
+import controleur.ControleurPokemon;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -11,6 +12,8 @@ public class VuePokemon extends Scene {
 	protected Label nom;
 	protected Label type;
 	protected Label description;
+	
+	private ControleurPokemon controleur = null;
 
 	public VuePokemon() {
 		
@@ -35,5 +38,9 @@ public class VuePokemon extends Scene {
 		this.nom.setText(pokemon.getNom());
 		//this.type.setText(pokemon.getType());
 		this.description.setText(pokemon.getDescription());
+	}
+	
+	public void setControleur(ControleurPokemon controleur) {
+		this.controleur = controleur;
 	}
 }

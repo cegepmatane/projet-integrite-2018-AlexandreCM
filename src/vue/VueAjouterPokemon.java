@@ -1,5 +1,6 @@
 package vue;
 
+import controleur.ControleurPokemon;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +14,8 @@ public class VueAjouterPokemon extends Scene {
 	protected TextField nom;
 	protected TextField type;
 	protected TextField description;
+	
+	private ControleurPokemon controleur = null;
 
 	public VueAjouterPokemon() {
 		
@@ -42,6 +45,10 @@ public class VueAjouterPokemon extends Scene {
 		 return null;
 		//Pokemon pokemon = new Pokemon(this.nom.getText(), this.type.getText(), this.description.getText());     
 		//return pokemon;
+	}
+	
+	public void setControleur(ControleurPokemon controleur) {
+		this.controleur = controleur;
 	}
 
 }

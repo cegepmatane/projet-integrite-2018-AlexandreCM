@@ -2,6 +2,7 @@ package vue;
 
 import java.util.ArrayList;
 
+import controleur.ControleurPokemon;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -11,6 +12,7 @@ import modele.Pokemon;
 public class VueListePokemon extends Scene {
 	
 	protected GridPane grillePokemon;
+	private ControleurPokemon controleur = null;
 
 	public VueListePokemon() {
 		
@@ -35,6 +37,10 @@ public class VueListePokemon extends Scene {
 			this.grillePokemon.add(new Label(pokemon.getDescription()), 2, numero);			
 		}
 		
+	}
+	
+	public void setControleur(ControleurPokemon controleur) {
+		this.controleur = controleur;
 	}
 
 }
