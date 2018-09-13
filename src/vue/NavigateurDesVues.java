@@ -34,6 +34,10 @@ public class NavigateurDesVues extends Application {
 		
 		this.controleur = ControleurPokemon.getInstance();
 		this.controleur.activerVues(this);
+		
+		this.vueAjouterPokemon.setControleur(controleur);
+		this.vueListePokemon.setControleur(controleur);
+		this.vuePokemon.setControleur(controleur);
 	}
 	
 	//// getVues
