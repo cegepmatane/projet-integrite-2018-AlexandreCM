@@ -5,7 +5,7 @@ public class Pokemon {
 	private int id;
 	private String nom;
 	private String type;
-	private String poids;
+	private float poids;
 	private String description;
 	
 	public Pokemon() {
@@ -44,11 +44,11 @@ public class Pokemon {
 		this.type = type;
 	}
 
-	public String getPoids() {
+	public float getPoids() {
 		return poids;
 	}
 
-	public void setPoids(String poids) {
+	public void setPoids(float poids) {
 		this.poids = poids;
 	}
 
