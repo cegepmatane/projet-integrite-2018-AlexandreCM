@@ -1,11 +1,8 @@
 package vue;
 
-import java.util.ArrayList;
-
 import controleur.ControleurPokemon;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import modele.Pokemon;
 
 public class NavigateurDesVues extends Application {
 	

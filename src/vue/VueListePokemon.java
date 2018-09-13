@@ -6,7 +6,6 @@ import controleur.ControleurPokemon;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import modele.Pokemon;
 
 public class VueListePokemon extends Scene {
