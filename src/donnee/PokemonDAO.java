@@ -1,7 +1,10 @@
 package donnee;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import modele.Pokemon;
@@ -31,7 +34,15 @@ public class PokemonDAO {
 		}
 		
 		try {
-			DriverManager.getConnection(BASEDEDONNEES_URL, BASEDEDONNEES_USAGER, BASEDEDONNEES_MOTDEPASSE);
+			Connection connection = DriverManager.getConnection(BASEDEDONNEES_URL, BASEDEDONNEES_USAGER, BASEDEDONNEES_MOTDEPASSE);
+			
+			Statement requeteListePokemon = connection.createStatement();
+			ResultSet curseurListePokemon = requeteListePokemon.executeQuery("SELECT * FROM pokemon");
+			curseurListePokemon.next();
+			String nom = curseurListePokemon.getString("nom");
+			int type = curseurListePokemon.getInt("type");
+			float poids = curseurListePokemon.getFloat("poids");
+			System.out.println("Pokemon " + nom + " de type " + type + " pese " + poids + "kg ");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
