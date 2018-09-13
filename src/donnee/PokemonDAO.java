@@ -10,13 +10,15 @@ import java.util.ArrayList;
 import modele.Pokemon;
 
 public class PokemonDAO {
+	
+	double test = 4.3;
 
 	private ArrayList<Pokemon> simulerListePokemon() {
 		
 		ArrayList<Pokemon> listePokemon = new ArrayList<Pokemon>();
-		listePokemon.add(new Pokemon("Carapuce", "Eau", "Bulled'eau"));
-		listePokemon.add(new Pokemon("Salameche", "Feu", "Flameche"));
-		listePokemon.add(new Pokemon("Bulbizare", "Plante", "Fouet liane"));
+		listePokemon.add(new Pokemon("Carapuce", 4, 5));
+		listePokemon.add(new Pokemon("Salameche", 2, 5));
+		listePokemon.add(new Pokemon("Bulbizare", 3, 4.3));
 		
 		return listePokemon;
 	}
@@ -33,16 +35,24 @@ public class PokemonDAO {
 			e.printStackTrace();
 		}
 		
+		ArrayList<Pokemon> listePokemon =  new ArrayList<Pokemon>();
 		try {
 			Connection connection = DriverManager.getConnection(BASEDEDONNEES_URL, BASEDEDONNEES_USAGER, BASEDEDONNEES_MOTDEPASSE);
 			
 			Statement requeteListePokemon = connection.createStatement();
 			ResultSet curseurListePokemon = requeteListePokemon.executeQuery("SELECT * FROM pokemon");
-			curseurListePokemon.next();
-			String nom = curseurListePokemon.getString("nom");
-			int type = curseurListePokemon.getInt("type");
-			float poids = curseurListePokemon.getFloat("poids");
-			System.out.println("Pokemon " + nom + " de type " + type + " pese " + poids + "kg ");
+			while(curseurListePokemon.next()) {
+				
+				String nom = curseurListePokemon.getString("nom");
+				int type = curseurListePokemon.getInt("type");
+				float poids = curseurListePokemon.getFloat("poids");
+				
+				System.out.println(nom + " de type " + type + " pese " + poids + "kg ");
+				
+				Pokemon pokemon = new Pokemon(nom, type, poids);
+				listePokemon.add(pokemon);
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
