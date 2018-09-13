@@ -3,7 +3,9 @@ package controleur;
 import java.util.ArrayList;
 
 import donnee.PokemonDAO;
+import donnee.TypePokemonDAO;
 import modele.Pokemon;
+import modele.TypePokemon;
 import vue.NavigateurDesVues;
 import vue.VueAjouterPokemon;
 import vue.VueListePokemon;
@@ -18,10 +20,12 @@ public class ControleurPokemon {
 	private VueAjouterPokemon vueAjouterPokemon = null;
 	
 	PokemonDAO pokemonDAO = null;
+	TypePokemonDAO typePokemonDAO = null;
 	
 	public ControleurPokemon() {
 		System.out.println("Initialisation du controleur");
 		this.pokemonDAO = new PokemonDAO();
+		this.typePokemonDAO = new TypePokemonDAO();
 	}
 	
 	public void activerVues(NavigateurDesVues navigateur) {
@@ -33,7 +37,8 @@ public class ControleurPokemon {
 		this.vueListePokemon= navigateur.getVueListePokemon();
 		
 		//// TEST ////
-		Pokemon pokemon = (new Pokemon("Salameche", 2, 5));
+		TypePokemon typePokemon = new TypePokemon(1, "Normal");
+		Pokemon pokemon = (new Pokemon("Salameche", typePokemon, 5, "pokemon terrestre"));
 		this.vuePokemon.afficherPokemon(pokemon);
 		
 		/// TEST ///
@@ -43,8 +48,8 @@ public class ControleurPokemon {
 		
 		//// afficher une vue ////
 		//this.navigateur.naviguerVersVuePokemon();
-		//this.navigateur.naviguerVersVueListePokemon();
-		this.navigateur.naviguerVersVueAjouterPokemon();
+		this.navigateur.naviguerVersVueListePokemon();
+		//this.navigateur.naviguerVersVueAjouterPokemon();
 	}
 	
 	// SINGLETON DEBUT
@@ -60,7 +65,7 @@ public class ControleurPokemon {
 	{
 		System.out.println("ControleurPokemon.notifierEnregistrerPokemon()");
 		Pokemon pokemon = this.navigateur.getVueAjouterPokemon().demanderPokemon();
-		//this.pokemonDAO.ajouterPokemon(pokemon);
+		this.pokemonDAO.ajouterPokemon(pokemon);
 		this.navigateur.naviguerVersVueListePokemon();
 	}
 	

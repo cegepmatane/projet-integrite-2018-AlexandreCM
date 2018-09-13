@@ -4,7 +4,7 @@ public class Pokemon {
 	
 	private int id;
 	private String nom;
-	private int type;
+	private TypePokemon typePokemon;
 	private double poids;
 	private String description;
 	
@@ -12,11 +12,12 @@ public class Pokemon {
 		super();
 	}
 	
-	public Pokemon(String nom, int type, double poids) {
+	public Pokemon(String nom, TypePokemon typePokemon, double poids, String description) {
 		super();
 		this.nom = nom;
-		this.type = type;
+		this.typePokemon = typePokemon;
 		this.poids = poids;
+		this.description = description;
 	}
 
 	
@@ -36,12 +37,12 @@ public class Pokemon {
 		this.nom = nom;
 	}
 
-	public int getType() {
-		return type;
+	public TypePokemon getType() {
+		return typePokemon;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public void setType(TypePokemon typePokemon) {
+		this.typePokemon = typePokemon;
 	}
 
 	public double getPoids() {

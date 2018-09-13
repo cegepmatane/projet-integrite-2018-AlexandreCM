@@ -16,6 +16,7 @@ public class VueAjouterPokemon extends Scene {
 	protected TextField nom;
 	protected TextField type;
 	protected TextField poids;
+	protected TextField description;
 	protected Button actionEnregistrerPokemon = null;
 	
 	private ControleurPokemon controleur = null;
@@ -39,12 +40,16 @@ public class VueAjouterPokemon extends Scene {
 		grillePokemon.add(nom, 1, 0);
 		
 		type = new TextField();
-		grillePokemon.add(new Label("Type : "), 0, 1);
+		grillePokemon.add(new Label("TypePokemon : "), 0, 1);
 		grillePokemon.add(type, 1, 1);
 		
 		poids = new TextField();
 		grillePokemon.add(new Label("Poids : "), 0, 2);
 		grillePokemon.add(poids, 1, 2);
+		
+		description = new TextField();
+		grillePokemon.add(new Label("Description : "), 0, 3);
+		grillePokemon.add(description, 1, 3);
 		
 		panneau.getChildren().add(new Label("Ajouter un Pokemon")); 
 		panneau.getChildren().add(grillePokemon);
@@ -53,9 +58,15 @@ public class VueAjouterPokemon extends Scene {
 	}
 	
 	public Pokemon demanderPokemon() {
-		Pokemon pokemon = new Pokemon(this.nom.getText(), Integer.parseInt(this.type.getText()), Double.parseDouble(this.poids.getText()));  
-		System.out.println(pokemon.getNom() + " de type " + pokemon.getType() + " pese " + pokemon.getPoids() + "kg ");
-		return pokemon;
+		/*Pokemon pokemon = new Pokemon(
+				this.nom.getText(), 
+				Integer.parseInt(this.type.getText()), 
+				Double.parseDouble(this.poids.getText()), 
+				this.description.getText()
+		);  */
+		//System.out.println(pokemon.getNom() + " de type " + pokemon.getType() + " pese " + pokemon.getPoids() + "kg ");
+		//return pokemon;
+		return null;
 	}
 	
 	public void setControleur(ControleurPokemon controleur) {

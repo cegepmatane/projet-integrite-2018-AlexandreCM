@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import modele.Pokemon;
+import modele.TypePokemon;
 
 public class PokemonDAO {
 	
@@ -31,20 +32,13 @@ public class PokemonDAO {
 		}
 		
 	}
-
-	private ArrayList<Pokemon> simulerListePokemon() {
-		
-		ArrayList<Pokemon> listePokemon = new ArrayList<Pokemon>();
-		listePokemon.add(new Pokemon("Carapuce", 4, 5));
-		listePokemon.add(new Pokemon("Salameche", 2, 5));
-		listePokemon.add(new Pokemon("Bulbizare", 3, 4.3));
-		
-		return listePokemon;
-	}
 	
 	public ArrayList<Pokemon> listePokemon() {
 		
 		ArrayList<Pokemon> listePokemon =  new ArrayList<Pokemon>();
+		TypePokemonDAO typePokemonDAO = new TypePokemonDAO();
+		TypePokemon typeDuPokemon = new TypePokemon();
+		
 		Statement requeteListePokemon;
 		try {
 			
@@ -53,20 +47,35 @@ public class PokemonDAO {
 			while(curseurListePokemon.next()) {
 				
 				String nom = curseurListePokemon.getString("nom");
-				int type = curseurListePokemon.getInt("type");
 				float poids = curseurListePokemon.getFloat("poids");
+				String description = curseurListePokemon.getString("description");
 				
-				System.out.println(nom + " de type " + type + " pese " + poids + "kg ");
+				int idTypePokemon = curseurListePokemon.getInt("idTypePokemon");
+				typeDuPokemon = typePokemonDAO.getTypeUnPokemon(idTypePokemon);
 				
-				Pokemon pokemon = new Pokemon(nom, type, poids);
+				Pokemon pokemon = new Pokemon(nom, typeDuPokemon, poids, description);
+				System.out.println(pokemon.getNom() + "est de type " + pokemon.getType().getLibelle());
 				listePokemon.add(pokemon);
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		//return this.simulerListePokemon();
 		return listePokemon;
+	}
+	
+	
+	public void ajouterPokemon(Pokemon pokemon) {
+		System.out.println("PokemonDAO.ajouterPokemon()");
+		try {
+			Statement requeteAjouterPokemon = connection.createStatement();
+			// TODO changer pour requete preparee
+			String sqlAjouterPokemon = "INSERT INTO pokemon(nom, type, poids, description) VALUES('"+pokemon.getNom()+"','"+pokemon.getType()+"','"+pokemon.getPoids()+"','"+pokemon.getDescription()+"')";
+			System.out.println("SQL : " + sqlAjouterPokemon);
+			requeteAjouterPokemon.execute(sqlAjouterPokemon);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -27,14 +27,13 @@ public class VueListePokemon extends Scene {
 		
 		int numero = 0;
 		this.grillePokemon.add(new Label("Nom"), 0, numero);
-		this.grillePokemon.add(new Label("Type"), 1, numero);			
-		this.grillePokemon.add(new Label("Description"), 2, numero);			
-		for(Pokemon pokemon : listePokemon)
-		{
+		this.grillePokemon.add(new Label("TypePokemon"), 1, numero);			
+		this.grillePokemon.add(new Label("Poids"), 2, numero);			
+		for(Pokemon pokemon : listePokemon) {
 			numero++;
 			this.grillePokemon.add(new Label(pokemon.getNom()), 0, numero);
-			//this.grillePokemon.add(new Label(pokemon.getType()), 1, numero);			
-			this.grillePokemon.add(new Label(pokemon.getDescription()), 2, numero);			
+			this.grillePokemon.add(new Label(pokemon.getType().getLibelle()), 1, numero);			
+			this.grillePokemon.add(new Label(Double.toString(pokemon.getPoids())), 2, numero);	
 		}
 		
 	}

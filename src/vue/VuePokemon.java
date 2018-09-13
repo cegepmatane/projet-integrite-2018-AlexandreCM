@@ -25,7 +25,7 @@ public class VuePokemon extends Scene {
 		grillePokemon.add(nom, 1, 0);
 		
 		type = new Label("Eau");
-		grillePokemon.add(new Label("Type : "), 0, 1);
+		grillePokemon.add(new Label("TypePokemon : "), 0, 1);
 		grillePokemon.add(type, 1, 1);
 		
 		description = new Label("Bulle d'eau");
