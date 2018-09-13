@@ -17,8 +17,11 @@ public class ControleurPokemon {
 	private VueListePokemon vueListePokemon = null;
 	private VueAjouterPokemon vueAjouterPokemon = null;
 	
+	PokemonDAO pokemonDAO = null;
+	
 	public ControleurPokemon() {
 		System.out.println("Initialisation du controleur");
+		this.pokemonDAO = new PokemonDAO();
 	}
 	
 	public void activerVues(NavigateurDesVues navigateur) {
@@ -40,8 +43,8 @@ public class ControleurPokemon {
 		
 		//// afficher une vue ////
 		//this.navigateur.naviguerVersVuePokemon();
-		this.navigateur.naviguerVersVueListePokemon();
-		//this.navigateur.naviguerVersVueAjouterPokemon();
+		//this.navigateur.naviguerVersVueListePokemon();
+		this.navigateur.naviguerVersVueAjouterPokemon();
 	}
 	
 	// SINGLETON DEBUT
@@ -52,5 +55,13 @@ public class ControleurPokemon {
 		return instance;
 	}
 	// SINGLETON FINI
+	
+	public void notifierEnregistrerPokemon()
+	{
+		System.out.println("ControleurPokemon.notifierEnregistrerPokemon()");
+		Pokemon pokemon = this.navigateur.getVueAjouterPokemon().demanderPokemon();
+		//this.pokemonDAO.ajouterPokemon(pokemon);
+		this.navigateur.naviguerVersVueListePokemon();
+	}
 	
 }

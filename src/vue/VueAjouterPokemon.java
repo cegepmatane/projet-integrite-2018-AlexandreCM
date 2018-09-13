@@ -1,6 +1,8 @@
 package vue;
 
 import controleur.ControleurPokemon;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +15,8 @@ public class VueAjouterPokemon extends Scene {
 	
 	protected TextField nom;
 	protected TextField type;
-	protected TextField description;
+	protected TextField poids;
+	protected Button actionEnregistrerPokemon = null;
 	
 	private ControleurPokemon controleur = null;
 
@@ -22,6 +25,14 @@ public class VueAjouterPokemon extends Scene {
 		super(new VBox(), 400, 400);
 		VBox panneau = (VBox) this.getRoot();
 		GridPane grillePokemon = new GridPane();
+		this.actionEnregistrerPokemon = new Button("Enregistrer");
+		
+		this.actionEnregistrerPokemon.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				controleur.notifierEnregistrerPokemon();
+			}
+ 		});
 		
 		nom = new TextField();
 		grillePokemon.add(new Label("Nom : "), 0, 0);
@@ -31,20 +42,20 @@ public class VueAjouterPokemon extends Scene {
 		grillePokemon.add(new Label("Type : "), 0, 1);
 		grillePokemon.add(type, 1, 1);
 		
-		description = new TextField();
-		grillePokemon.add(new Label("Description : "), 0, 2);
-		grillePokemon.add(description, 1, 2);
+		poids = new TextField();
+		grillePokemon.add(new Label("Poids : "), 0, 2);
+		grillePokemon.add(poids, 1, 2);
 		
 		panneau.getChildren().add(new Label("Ajouter un Pokemon")); 
 		panneau.getChildren().add(grillePokemon);
-		panneau.getChildren().add(new Button("Enregistrer"));
+		panneau.getChildren().add(this.actionEnregistrerPokemon);
 		
 	}
 	
 	public Pokemon demanderPokemon() {
-		 return null;
-		//Pokemon pokemon = new Pokemon(this.nom.getText(), this.type.getText(), this.description.getText());     
-		//return pokemon;
+		Pokemon pokemon = new Pokemon(this.nom.getText(), Integer.parseInt(this.type.getText()), Double.parseDouble(this.poids.getText()));  
+		System.out.println(pokemon.getNom() + " de type " + pokemon.getType() + " pese " + pokemon.getPoids() + "kg ");
+		return pokemon;
 	}
 	
 	public void setControleur(ControleurPokemon controleur) {
