@@ -11,7 +11,26 @@ import modele.Pokemon;
 
 public class PokemonDAO {
 	
-	double test = 4.3;
+	String BASEDEDONNEES_DRIVER = "org.postgresql.Driver";
+	String BASEDEDONNEES_URL = "jdbc:postgresql://localhost:5432/pokemon";
+	String BASEDEDONNEES_USAGER = "postgres";
+	String BASEDEDONNEES_MOTDEPASSE = "root";
+	private Connection connection = null;
+	
+	public PokemonDAO() {
+		try {
+			Class.forName(BASEDEDONNEES_DRIVER);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			connection = DriverManager.getConnection(BASEDEDONNEES_URL, BASEDEDONNEES_USAGER, BASEDEDONNEES_MOTDEPASSE);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	private ArrayList<Pokemon> simulerListePokemon() {
 		
@@ -24,22 +43,12 @@ public class PokemonDAO {
 	}
 	
 	public ArrayList<Pokemon> listePokemon() {
-		String BASEDEDONNEES_DRIVER = "org.postgresql.Driver";
-		String BASEDEDONNEES_URL = "jdbc:postgresql://localhost:5432/pokemon";
-		String BASEDEDONNEES_USAGER = "postgres";
-		String BASEDEDONNEES_MOTDEPASSE = "root";
-		
-		try {
-			Class.forName(BASEDEDONNEES_DRIVER);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 		
 		ArrayList<Pokemon> listePokemon =  new ArrayList<Pokemon>();
+		Statement requeteListePokemon;
 		try {
-			Connection connection = DriverManager.getConnection(BASEDEDONNEES_URL, BASEDEDONNEES_USAGER, BASEDEDONNEES_MOTDEPASSE);
 			
-			Statement requeteListePokemon = connection.createStatement();
+			requeteListePokemon = connection.createStatement();
 			ResultSet curseurListePokemon = requeteListePokemon.executeQuery("SELECT * FROM pokemon");
 			while(curseurListePokemon.next()) {
 				
@@ -57,6 +66,7 @@ public class PokemonDAO {
 			e.printStackTrace();
 		}
 		
-		return this.simulerListePokemon();
+		//return this.simulerListePokemon();
+		return listePokemon;
 	}
 }
