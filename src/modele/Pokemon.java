@@ -4,19 +4,19 @@ public class Pokemon {
 	
 	private int id;
 	private String nom;
-	private String type;
-	private float poids;
+	private int type;
+	private double poids;
 	private String description;
 	
 	public Pokemon() {
 		super();
 	}
 	
-	public Pokemon(String nom, String type, String description) {
+	public Pokemon(String nom, int type, double poids) {
 		super();
 		this.nom = nom;
 		this.type = type;
-		this.description = description;
+		this.poids = poids;
 	}
 
 	
@@ -36,19 +36,19 @@ public class Pokemon {
 		this.nom = nom;
 	}
 
-	public String getType() {
+	public int getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 
-	public float getPoids() {
+	public double getPoids() {
 		return poids;
 	}
 
-	public void setPoids(float poids) {
+	public void setPoids(double poids) {
 		this.poids = poids;
 	}
 

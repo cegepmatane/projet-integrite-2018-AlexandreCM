@@ -30,7 +30,7 @@ public class ControleurPokemon {
 		this.vueListePokemon= navigateur.getVueListePokemon();
 		
 		//// TEST ////
-		Pokemon pokemon = new Pokemon("Salameche", "Feu", "Flameche");
+		Pokemon pokemon = (new Pokemon("Salameche", 2, 5));
 		this.vuePokemon.afficherPokemon(pokemon);
 		
 		/// TEST ///

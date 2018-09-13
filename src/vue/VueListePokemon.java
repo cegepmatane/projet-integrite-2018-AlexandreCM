@@ -31,7 +31,7 @@ public class VueListePokemon extends Scene {
 		{
 			numero++;
 			this.grillePokemon.add(new Label(pokemon.getNom()), 0, numero);
-			this.grillePokemon.add(new Label(pokemon.getType()), 1, numero);			
+			//this.grillePokemon.add(new Label(pokemon.getType()), 1, numero);			
 			this.grillePokemon.add(new Label(pokemon.getDescription()), 2, numero);			
 		}
 		

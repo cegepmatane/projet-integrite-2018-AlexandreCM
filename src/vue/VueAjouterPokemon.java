@@ -39,9 +39,9 @@ public class VueAjouterPokemon extends Scene {
 	}
 	
 	public Pokemon demanderPokemon() {
-		// return null;
-		Pokemon pokemon = new Pokemon(this.nom.getText(), this.type.getText(), this.description.getText());     
-		return pokemon;
+		 return null;
+		//Pokemon pokemon = new Pokemon(this.nom.getText(), this.type.getText(), this.description.getText());     
+		//return pokemon;
 	}
 
 }

@@ -33,7 +33,7 @@ public class VuePokemon extends Scene {
 	
 	public void afficherPokemon(Pokemon pokemon) {
 		this.nom.setText(pokemon.getNom());
-		this.type.setText(pokemon.getType());
+		//this.type.setText(pokemon.getType());
 		this.description.setText(pokemon.getDescription());
 	}
 }
