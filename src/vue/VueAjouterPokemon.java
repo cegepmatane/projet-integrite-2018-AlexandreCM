@@ -12,7 +12,7 @@ public class VueAjouterPokemon extends Scene {
 	
 	protected TextField nom;
 	protected TextField type;
-	protected TextField capacite;
+	protected TextField description;
 
 	public VueAjouterPokemon() {
 		
@@ -28,9 +28,9 @@ public class VueAjouterPokemon extends Scene {
 		grillePokemon.add(new Label("Type : "), 0, 1);
 		grillePokemon.add(type, 1, 1);
 		
-		capacite = new TextField();
-		grillePokemon.add(new Label("Capacité : "), 0, 2);
-		grillePokemon.add(capacite, 1, 2);
+		description = new TextField();
+		grillePokemon.add(new Label("Description : "), 0, 2);
+		grillePokemon.add(description, 1, 2);
 		
 		panneau.getChildren().add(new Label("Ajouter un Pokemon")); 
 		panneau.getChildren().add(grillePokemon);
@@ -40,7 +40,7 @@ public class VueAjouterPokemon extends Scene {
 	
 	public Pokemon demanderPokemon() {
 		// return null;
-		Pokemon pokemon = new Pokemon(this.nom.getText(), this.type.getText(), this.capacite.getText());     
+		Pokemon pokemon = new Pokemon(this.nom.getText(), this.type.getText(), this.description.getText());     
 		return pokemon;
 	}
 

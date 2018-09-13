@@ -2,19 +2,30 @@ package modele;
 
 public class Pokemon {
 	
+	private int id;
 	private String nom;
 	private String type;
-	private String capacite;
+	private String poids;
+	private String description;
 	
 	public Pokemon() {
 		super();
 	}
 	
-	public Pokemon(String nom, String type, String capacite) {
+	public Pokemon(String nom, String type, String description) {
 		super();
 		this.nom = nom;
 		this.type = type;
-		this.capacite = capacite;
+		this.description = description;
+	}
+
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNom() {
@@ -33,12 +44,20 @@ public class Pokemon {
 		this.type = type;
 	}
 
-	public String getCapacite() {
-		return capacite;
+	public String getPoids() {
+		return poids;
 	}
 
-	public void setCapacite(String capacite) {
-		this.capacite = capacite;
+	public void setPoids(String poids) {
+		this.poids = poids;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }

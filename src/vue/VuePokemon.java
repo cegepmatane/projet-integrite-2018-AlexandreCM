@@ -10,7 +10,7 @@ public class VuePokemon extends Scene {
 	
 	protected Label nom;
 	protected Label type;
-	protected Label capacite;
+	protected Label description;
 
 	public VuePokemon() {
 		
@@ -25,15 +25,15 @@ public class VuePokemon extends Scene {
 		grillePokemon.add(new Label("Type : "), 0, 1);
 		grillePokemon.add(type, 1, 1);
 		
-		capacite = new Label("Bulle d'eau");
-		grillePokemon.add(new Label("Capacite : "), 0, 2);
-		grillePokemon.add(capacite, 1, 2);
+		description = new Label("Bulle d'eau");
+		grillePokemon.add(new Label("Description : "), 0, 2);
+		grillePokemon.add(description, 1, 2);
 		
 	}
 	
 	public void afficherPokemon(Pokemon pokemon) {
 		this.nom.setText(pokemon.getNom());
 		this.type.setText(pokemon.getType());
-		this.capacite.setText(pokemon.getCapacite());
+		this.description.setText(pokemon.getDescription());
 	}
 }
