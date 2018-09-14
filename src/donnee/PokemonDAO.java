@@ -43,7 +43,7 @@ public class PokemonDAO {
 		try {
 			
 			requeteListePokemon = connection.createStatement();
-			ResultSet curseurListePokemon = requeteListePokemon.executeQuery("SELECT * FROM pokemon");
+			ResultSet curseurListePokemon = requeteListePokemon.executeQuery("SELECT * FROM pokemon ORDER BY id");
 			while(curseurListePokemon.next()) {
 				
 				String nom = curseurListePokemon.getString("nom");
