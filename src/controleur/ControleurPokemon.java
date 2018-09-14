@@ -48,8 +48,8 @@ public class ControleurPokemon {
 		
 		//// afficher une vue ////
 		//this.navigateur.naviguerVersVuePokemon();
-		//this.navigateur.naviguerVersVueListePokemon();
-		this.navigateur.naviguerVersVueAjouterPokemon();
+		this.navigateur.naviguerVersVueListePokemon();
+		//this.navigateur.naviguerVersVueAjouterPokemon();
 	}
 	
 	// SINGLETON DEBUT
@@ -67,6 +67,12 @@ public class ControleurPokemon {
 		Pokemon pokemon = this.navigateur.getVueAjouterPokemon().demanderPokemon();
 		this.pokemonDAO.ajouterPokemon(pokemon);
 		this.navigateur.naviguerVersVueListePokemon();
+	}
+	
+	public void notifierNaviguerEditerMouton() {
+		System.out.println("ControleurMouton.notifierEditerMouton()");
+		this.navigateur.naviguerVersVueModifierPokemon();
+		
 	}
 	
 }

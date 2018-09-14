@@ -12,6 +12,7 @@ public class NavigateurDesVues extends Application {
 	private VuePokemon vuePokemon = null;
 	private VueListePokemon vueListePokemon = null;
 	private VueAjouterPokemon vueAjouterPokemon = null;
+	private VueModifierPokemon vueModifierPokemon = null;
 	
 
 	
@@ -20,6 +21,7 @@ public class NavigateurDesVues extends Application {
 		this.vuePokemon = new VuePokemon();
 		this.vueListePokemon = new VueListePokemon();
 		this.vueAjouterPokemon = new VueAjouterPokemon();
+		this.vueModifierPokemon = new VueModifierPokemon();
 	}
 
 	@Override
@@ -33,9 +35,10 @@ public class NavigateurDesVues extends Application {
 		this.controleur = ControleurPokemon.getInstance();
 		this.controleur.activerVues(this);
 		
-		this.vueAjouterPokemon.setControleur(controleur);
 		this.vueListePokemon.setControleur(controleur);
 		this.vuePokemon.setControleur(controleur);
+		this.vueAjouterPokemon.setControleur(controleur);
+		this.vueModifierPokemon.setControleur(controleur);
 	}
 	
 	//// getVues
@@ -49,6 +52,10 @@ public class NavigateurDesVues extends Application {
 	
 	public VueAjouterPokemon getVueAjouterPokemon() {
 		return vueAjouterPokemon;
+	}
+	
+	public VueModifierPokemon getVueModifierPokemon() {
+		return vueModifierPokemon;
 	}
  	
 	//// naviguerVers
@@ -64,6 +71,11 @@ public class NavigateurDesVues extends Application {
 	
 	public void naviguerVersVueAjouterPokemon() {
 		stade.setScene(this.vueAjouterPokemon);
+		stade.show();				
+	}
+	
+	public void naviguerVersVueModifierPokemon() {
+		stade.setScene(this.vueModifierPokemon);
 		stade.show();				
 	}
 

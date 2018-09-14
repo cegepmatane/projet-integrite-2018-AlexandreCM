@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import controleur.ControleurPokemon;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import modele.Pokemon;
@@ -32,7 +33,8 @@ public class VueListePokemon extends Scene {
 			numero++;
 			this.grillePokemon.add(new Label(pokemon.getNom()), 0, numero);
 			this.grillePokemon.add(new Label(pokemon.getType().getLibelle()), 1, numero);			
-			this.grillePokemon.add(new Label(Double.toString(pokemon.getPoids())), 2, numero);	
+			this.grillePokemon.add(new Label(Double.toString(pokemon.getPoids())), 2, numero);
+			this.grillePokemon.add(new Button("Modifier"), 3, numero);
 		}
 		
 	}
