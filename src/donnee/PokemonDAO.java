@@ -54,7 +54,7 @@ public class PokemonDAO {
 				typeDuPokemon = typePokemonDAO.getTypeUnPokemon(idTypePokemon);
 				
 				Pokemon pokemon = new Pokemon(nom, typeDuPokemon, poids, description);
-				System.out.println(pokemon.getNom() + "est de type " + pokemon.getType().getLibelle());
+				//System.out.println(pokemon.getNom() + "est de type " + pokemon.getType().getLibelle());
 				listePokemon.add(pokemon);
 			}
 			
@@ -70,7 +70,7 @@ public class PokemonDAO {
 		try {
 			Statement requeteAjouterPokemon = connection.createStatement();
 			// TODO changer pour requete preparee
-			String sqlAjouterPokemon = "INSERT INTO pokemon(nom, type, poids, description) VALUES('"+pokemon.getNom()+"','"+pokemon.getType()+"','"+pokemon.getPoids()+"','"+pokemon.getDescription()+"')";
+			String sqlAjouterPokemon = "INSERT INTO pokemon(nom, \"idTypePokemon\", poids, description) VALUES('"+pokemon.getNom()+"','"+pokemon.getType().getId()+"','"+pokemon.getPoids()+"','"+pokemon.getDescription()+"')";
 			System.out.println("SQL : " + sqlAjouterPokemon);
 			requeteAjouterPokemon.execute(sqlAjouterPokemon);
 			

@@ -33,5 +33,10 @@ public class TypePokemon {
 		this.libelle = libelle;
 	}
 	
+	@Override
+	public String toString() {
+		return libelle;
+	}
+	
 	
 }

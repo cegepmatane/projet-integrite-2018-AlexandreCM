@@ -48,8 +48,8 @@ public class ControleurPokemon {
 		
 		//// afficher une vue ////
 		//this.navigateur.naviguerVersVuePokemon();
-		this.navigateur.naviguerVersVueListePokemon();
-		//this.navigateur.naviguerVersVueAjouterPokemon();
+		//this.navigateur.naviguerVersVueListePokemon();
+		this.navigateur.naviguerVersVueAjouterPokemon();
 	}
 	
 	// SINGLETON DEBUT

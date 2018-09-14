@@ -42,7 +42,7 @@ public class TypePokemonDAO {
 				int id = curseurListeTypesPokemon.getInt("id");
 				String libelle = curseurListeTypesPokemon.getString("libelle");
 				
-				System.out.println(id + " corespond au type " + libelle);
+				//System.out.println(id + " corespond au type " + libelle);
 				
 				TypePokemon typePokemon = new TypePokemon(id, libelle);
 				listeTypesPokemon.add(typePokemon);

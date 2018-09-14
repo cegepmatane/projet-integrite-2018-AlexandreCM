@@ -26,6 +26,7 @@ public class NavigateurDesVues extends Application {
 	public void start(Stage stade) throws Exception {
 		
 		this.stade = stade;
+		stade.setTitle("Pokemon");
 		//this.stade.setScene(null);
 		//stade.show();
 		
