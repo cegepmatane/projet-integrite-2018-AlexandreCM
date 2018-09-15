@@ -92,11 +92,15 @@ public class PokemonDAO {
 		System.out.println("PokemonDAO : ajouterPokemon(Pokemon pokemon) => pokemon = " + pokemon.getNom());
 		
 		try {
-			Statement requeteAjouterPokemon = connection.createStatement();
-			// TODO changer pour requete preparee
-			String sqlAjouterPokemon = "INSERT INTO pokemon(nom, \"idTypePokemon\", poids, description) VALUES('"+pokemon.getNom()+"','"+pokemon.getType().getId()+"','"+pokemon.getPoids()+"','"+pokemon.getDescription()+"')";
-			System.out.println("SQL : " + sqlAjouterPokemon);
-			requeteAjouterPokemon.execute(sqlAjouterPokemon);
+			String sqlAjouterPokemon = "INSERT INTO pokemon(nom, \"idTypePokemon\", poids, description) VALUES(?, ?, ?, ?)";
+			//"+pokemon.getNom()+"','"+pokemon.getType().getId()+"','"+pokemon.getPoids()+"','"+pokemon.getDescription()
+			PreparedStatement requeteAjouterPokemon = connection.prepareStatement(sqlAjouterPokemon);
+			requeteAjouterPokemon.setString(1, pokemon.getNom());
+			requeteAjouterPokemon.setInt(2, pokemon.getType().getId());
+			requeteAjouterPokemon.setDouble(3, pokemon.getPoids());
+			requeteAjouterPokemon.setString(4, pokemon.getDescription());
+			
+			requeteAjouterPokemon.execute();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
