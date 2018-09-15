@@ -16,14 +16,14 @@ public class VueListePokemon extends Scene {
 	private ControleurPokemon controleur = null;
 
 	protected GridPane grillePokemon;
-	//protected Button actionModifierPokemon = null;
+	protected Button actionModifierPokemon = null;
 
 	public void setControleur(ControleurPokemon controleur) {
 		this.controleur = controleur;
 	}
 	
 	public VueListePokemon() {
-		super(new GridPane(), 400,400);
+		super(new GridPane());
 		System.out.println("VueListePokemon : VueListePokemon()");
 		
 		grillePokemon = (GridPane) this.getRoot();
@@ -42,8 +42,8 @@ public class VueListePokemon extends Scene {
 		//this.actionModifierPokemon = new Button("Modifier");
 		for(Pokemon pokemon : listePokemon) {
 			
-			Button actionModifierPokemon = new Button("Modifier");
-			actionModifierPokemon.setOnAction(new EventHandler<ActionEvent>() {
+			this.actionModifierPokemon = new Button("Modifier");
+			this.actionModifierPokemon.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
 					controleur.notifierNaviguerVersVueModifierPokemon(pokemon);

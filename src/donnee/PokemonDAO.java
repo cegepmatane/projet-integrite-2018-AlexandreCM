@@ -1,7 +1,6 @@
 package donnee;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,24 +12,9 @@ import modele.TypePokemon;
 public class PokemonDAO {
 	
 	private Connection connection = null;
-	String BASEDEDONNEES_DRIVER = "org.postgresql.Driver";
-	String BASEDEDONNEES_URL = "jdbc:postgresql://localhost:5432/pokemon";
-	String BASEDEDONNEES_USAGER = "postgres";
-	String BASEDEDONNEES_MOTDEPASSE = "root";
 	
 	public PokemonDAO() {
-		try {
-			Class.forName(BASEDEDONNEES_DRIVER);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			connection = DriverManager.getConnection(BASEDEDONNEES_URL, BASEDEDONNEES_USAGER, BASEDEDONNEES_MOTDEPASSE);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+		this.connection = BaseDeDonnees.getInstance().getConnection();
 	}
 	
 	public ArrayList<Pokemon> getListePokemon() {

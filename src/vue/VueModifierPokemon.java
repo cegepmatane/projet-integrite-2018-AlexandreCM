@@ -18,6 +18,8 @@ import modele.TypePokemon;
 
 public class VueModifierPokemon extends Scene {
 	
+	private ControleurPokemon controleur = null;
+
 	private int id = 0;
 	protected TextField nom;
 	protected ComboBox<TypePokemon> typePokemon;
@@ -25,8 +27,6 @@ public class VueModifierPokemon extends Scene {
 	protected TextField description;
 	protected Button actionEnregistrerModificationPokemon = null;
 	
-	private ControleurPokemon controleur = null;
-
 	public void setControleur(ControleurPokemon controleur) {
 		this.controleur = controleur;
 	}
