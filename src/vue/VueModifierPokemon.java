@@ -37,15 +37,6 @@ public class VueModifierPokemon extends Scene {
 		System.out.println("VueModifierPokemon : VueModifierPokemon()");
 		VBox panneau = (VBox) this.getRoot();
 		GridPane grillePokemon = new GridPane();
-		this.actionEnregistrerModificationPokemon = new Button("Enregistrer");
-		
-		this.actionEnregistrerModificationPokemon.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				System.out.println("VueModifierPokemon : bouton actionEnregistrerModificationPokemon vers controleur.notifierEnregistrerModificationPokemon()");
-				controleur.notifierEnregistrerModificationPokemon();
-			}
- 		});
 		
 		nom = new TextField();
 		grillePokemon.add(new Label("Nom : "), 0, 0);
@@ -69,6 +60,15 @@ public class VueModifierPokemon extends Scene {
 		description = new TextField();
 		grillePokemon.add(new Label("Description : "), 0, 3);
 		grillePokemon.add(description, 1, 3);	
+		
+		this.actionEnregistrerModificationPokemon = new Button("Enregistrer");
+		this.actionEnregistrerModificationPokemon.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				System.out.println("VueModifierPokemon : bouton actionEnregistrerModificationPokemon vers controleur.notifierEnregistrerModificationPokemon()");
+				controleur.notifierEnregistrerModificationPokemon();
+			}
+ 		});
 		
 		this.actionRetourVersVueListePokemon = new Button("Retour");
 		this.actionRetourVersVueListePokemon.setOnAction(new EventHandler<ActionEvent>() {
