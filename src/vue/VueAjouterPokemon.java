@@ -19,12 +19,9 @@ import modele.TypePokemon;
 public class VueAjouterPokemon extends Scene {
 	
 	protected TextField nom;
-	protected TextField type;
+	protected ComboBox<TypePokemon> typePokemon;
 	protected TextField poids;
 	protected TextField description;
-	
-	protected ComboBox<TypePokemon> typePokemon;
-	
 	protected Button actionEnregistrerPokemon = null;
 	
 	private ControleurPokemon controleur = null;
@@ -39,7 +36,7 @@ public class VueAjouterPokemon extends Scene {
 		this.actionEnregistrerPokemon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				controleur.notifierEnregistrerPokemon();
+				controleur.notifierAjouterPokemon();
 			}
  		});
 		
@@ -72,9 +69,7 @@ public class VueAjouterPokemon extends Scene {
 	}
 	
 	public Pokemon demanderPokemon() {
-		TypePokemon value = typePokemon.getValue();
-		System.out.println(value.getId());
-		
+
 		Pokemon pokemon = new Pokemon(
 				this.nom.getText(), 
 				this.typePokemon.getValue(),

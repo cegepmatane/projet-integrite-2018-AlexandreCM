@@ -46,6 +46,7 @@ public class PokemonDAO {
 			ResultSet curseurListePokemon = requeteListePokemon.executeQuery("SELECT * FROM pokemon ORDER BY id");
 			while(curseurListePokemon.next()) {
 				
+				int id = curseurListePokemon.getInt("id");
 				String nom = curseurListePokemon.getString("nom");
 				float poids = curseurListePokemon.getFloat("poids");
 				String description = curseurListePokemon.getString("description");
@@ -54,6 +55,7 @@ public class PokemonDAO {
 				typeDuPokemon = typePokemonDAO.getTypeUnPokemon(idTypePokemon);
 				
 				Pokemon pokemon = new Pokemon(nom, typeDuPokemon, poids, description);
+				pokemon.setId(id);
 				//System.out.println(pokemon.getNom() + "est de type " + pokemon.getType().getLibelle());
 				listePokemon.add(pokemon);
 			}
@@ -77,5 +79,53 @@ public class PokemonDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void modifierPokemon(Pokemon pokemon) {
+		System.out.println("PokemonDAO.modifierPokemon()");
+		try {
+			Statement requeteModifierPokemon = connection.createStatement();
+			// TODO changer pour requete preparee
+			String sqlModifierPokemon = "UPDATE public.pokemon SET nom='"+pokemon.getNom()+"', poids="+pokemon.getPoids()+", description='"+pokemon.getDescription()+"', \"idTypePokemon\"="+pokemon.getType().getId()+" WHERE id = "+ pokemon.getId() +";";
+			System.out.println("SQL : " + sqlModifierPokemon);
+			//Carabaffe a une large queue recouverte d’une épaisse fourrure. Elle devient de plus en plus foncée avec l’âge. Les éraflures sur la carapace de ce Pokémon témoignent de son expérience au combat.
+			requeteModifierPokemon.execute(sqlModifierPokemon);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	public Pokemon rapporterPokemon(int idPokemon)
+	{
+		Statement requeteLePokemon;
+		TypePokemonDAO typePokemonDAO = new TypePokemonDAO();
+		TypePokemon typeDuPokemon = new TypePokemon();
+		try {
+			requeteLePokemon = connection.createStatement();
+			// TODO factoriser chaines magiques dans des constantes - si possible interfaces
+			// TODO changer pour requete preparee
+			String SQL_RAPPORTER_POKEMON = "SELECT * FROM pokemon WHERE id = " + idPokemon;
+			System.out.println(SQL_RAPPORTER_POKEMON);
+			ResultSet curseurPokemon = requeteLePokemon.executeQuery(SQL_RAPPORTER_POKEMON);
+			curseurPokemon.next();
+			
+			int id = curseurPokemon.getInt("id");
+			String nom = curseurPokemon.getString("nom");
+			float poids = curseurPokemon.getFloat("poids");
+			String description = curseurPokemon.getString("description");
+			
+			int idTypePokemon = curseurPokemon.getInt("idTypePokemon");
+			typeDuPokemon = typePokemonDAO.getTypeUnPokemon(idTypePokemon);
+			
+			Pokemon pokemon = new Pokemon(nom, typeDuPokemon, poids, description);
+			pokemon.setId(id);
+			System.out.println(pokemon.getNom() + "est de type " + pokemon.getType().getLibelle());
+			return pokemon;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

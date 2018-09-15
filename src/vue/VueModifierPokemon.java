@@ -13,15 +13,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import modele.Pokemon;
 import modele.TypePokemon;
 
 public class VueModifierPokemon extends Scene {
 	
+	private int id = 0;
 	protected TextField nom;
 	protected ComboBox<TypePokemon> typePokemon;
 	protected TextField poids;
 	protected TextField description;
-	protected Button actionEnregistrerPokemon = null;
+	protected Button actionEnregistrerModificationPokemon = null;
 	
 	private ControleurPokemon controleur = null;
 
@@ -34,12 +36,12 @@ public class VueModifierPokemon extends Scene {
 		super(new VBox(), 400, 400);
 		VBox panneau = (VBox) this.getRoot();
 		GridPane grillePokemon = new GridPane();
-		this.actionEnregistrerPokemon = new Button("Enregistrer");
+		this.actionEnregistrerModificationPokemon = new Button("Enregistrer");
 		
-		this.actionEnregistrerPokemon.setOnAction(new EventHandler<ActionEvent>() {
+		this.actionEnregistrerModificationPokemon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				controleur.notifierEnregistrerPokemon();
+				controleur.notifierEnregistrerModificationPokemon();
 			}
  		});
 		
@@ -52,6 +54,7 @@ public class VueModifierPokemon extends Scene {
 		listeTypes = typePokemonDAO.getListeTypesPokemon();
 		
 		typePokemon = new ComboBox<TypePokemon>();
+		typePokemon.setPromptText("Email address");
 		typePokemon.getItems().addAll(listeTypes);
 		typePokemon.setMinWidth(200);
 		grillePokemon.add(new Label("Type : "), 0, 1);
@@ -65,10 +68,33 @@ public class VueModifierPokemon extends Scene {
 		grillePokemon.add(new Label("Description : "), 0, 3);
 		grillePokemon.add(description, 1, 3);		
 		
-		panneau.getChildren().add(new Label("Ajouter un Pokemon")); 
+		panneau.getChildren().add(new Label("Modifier un Pokemon")); 
 		panneau.getChildren().add(grillePokemon);
-		panneau.getChildren().add(this.actionEnregistrerPokemon);
+		panneau.getChildren().add(this.actionEnregistrerModificationPokemon);
 	
+	}
+	
+	public void afficherPokemon(Pokemon pokemon) {
+		this.id = pokemon.getId();
+		this.nom.setText(pokemon.getNom());
+		this.typePokemon.setValue(pokemon.getType());
+		this.poids.setText(Double.toString(pokemon.getPoids()));
+		this.description.setText(pokemon.getDescription());
+	}
+	
+	public Pokemon demanderModificationPokemon() {
+		System.out.println("demanderModificationPokemon()");
+		
+		Pokemon pokemon = new Pokemon(
+				this.nom.getText(), 
+				this.typePokemon.getValue(),
+				Double.parseDouble(this.poids.getText()), 
+				this.description.getText()
+		);
+		pokemon.setId(id);
+		System.out.println("type = " + pokemon.getType().getLibelle());
+		//System.out.println(pokemon.getId() +" : "+ pokemon.getNom() + " de type " + pokemon.getType() + " pese " + pokemon.getPoids() + "kg ");
+		return pokemon;
 	}
 
 }
