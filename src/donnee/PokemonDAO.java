@@ -79,7 +79,6 @@ public class PokemonDAO {
 			
 			Pokemon pokemon = new Pokemon(nom, typeDuPokemon, poids, description);
 			pokemon.setId(id);
-			//System.out.println(pokemon.getNom() + "est de type " + pokemon.getType().getLibelle());
 			return pokemon;
 
 		} catch (SQLException e) {
@@ -93,8 +92,8 @@ public class PokemonDAO {
 		
 		try {
 			String sqlAjouterPokemon = "INSERT INTO pokemon(nom, \"idTypePokemon\", poids, description) VALUES(?, ?, ?, ?)";
-			//"+pokemon.getNom()+"','"+pokemon.getType().getId()+"','"+pokemon.getPoids()+"','"+pokemon.getDescription()
 			PreparedStatement requeteAjouterPokemon = connection.prepareStatement(sqlAjouterPokemon);
+			
 			requeteAjouterPokemon.setString(1, pokemon.getNom());
 			requeteAjouterPokemon.setInt(2, pokemon.getType().getId());
 			requeteAjouterPokemon.setDouble(3, pokemon.getPoids());
@@ -111,12 +110,16 @@ public class PokemonDAO {
 		System.out.println("PokemonDAO : modifierPokemon(Pokemon pokemon) => pokemon = " + pokemon.getNom());
 		
 		try {
-			Statement requeteModifierPokemon = connection.createStatement();
-			// TODO changer pour requete preparee
-			String sqlModifierPokemon = "UPDATE public.pokemon SET nom='"+pokemon.getNom()+"', poids="+pokemon.getPoids()+", description='"+pokemon.getDescription()+"', \"idTypePokemon\"="+pokemon.getType().getId()+" WHERE id = "+ pokemon.getId() +";";
-			//System.out.println("SQL : " + sqlModifierPokemon);
-			//Carabaffe a une large queue recouverte d’une épaisse fourrure. Elle devient de plus en plus foncée avec l’âge. Les éraflures sur la carapace de ce Pokémon témoignent de son expérience au combat.
-			requeteModifierPokemon.execute(sqlModifierPokemon);
+			String sqlModifierPokemon = "UPDATE public.pokemon SET nom= ?, \"idTypePokemon\"= ?, poids= ?, description= ? WHERE id =  ?;";
+			PreparedStatement requeteModifierPokemon = connection.prepareStatement(sqlModifierPokemon);
+
+			requeteModifierPokemon.setString(1, pokemon.getNom());
+			requeteModifierPokemon.setInt(2, pokemon.getType().getId());
+			requeteModifierPokemon.setDouble(3, pokemon.getPoids());
+			requeteModifierPokemon.setString(4, pokemon.getDescription());
+			requeteModifierPokemon.setInt(5, pokemon.getId());
+			
+			requeteModifierPokemon.execute();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
