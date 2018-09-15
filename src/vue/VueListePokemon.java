@@ -17,6 +17,7 @@ public class VueListePokemon extends Scene {
 
 	protected GridPane grillePokemon;
 	protected Button actionModifierPokemon = null;
+	protected Button actionNaviguerVersVueAjouterPokemon = null;
 
 	public void setControleur(ControleurPokemon controleur) {
 		this.controleur = controleur;
@@ -56,6 +57,15 @@ public class VueListePokemon extends Scene {
 			this.grillePokemon.add(new Label(Double.toString(pokemon.getPoids())), 2, numero);
 			this.grillePokemon.add(actionModifierPokemon, 3, numero);
 		}
+		
+		this.actionNaviguerVersVueAjouterPokemon = new Button("Ajouter un nouveau pokemon");
+		this.actionNaviguerVersVueAjouterPokemon.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				controleur.notifierNaviguerVersVueAjouterPokemon();
+			}
+		});
+		this.grillePokemon.add(actionNaviguerVersVueAjouterPokemon, 0, numero+1);
 		
 	}
 }

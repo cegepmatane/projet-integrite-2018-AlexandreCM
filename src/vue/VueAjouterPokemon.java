@@ -25,6 +25,7 @@ public class VueAjouterPokemon extends Scene {
 	protected TextField poids;
 	protected TextField description;
 	protected Button actionEnregistrerPokemon = null;
+	protected Button actionRetourVersVueListePokemon = null;
 
 	public void setControleur(ControleurPokemon controleur) {
 		this.controleur = controleur;
@@ -67,11 +68,20 @@ public class VueAjouterPokemon extends Scene {
 		
 		description = new TextField();
 		grillePokemon.add(new Label("Description : "), 0, 3);
-		grillePokemon.add(description, 1, 3);		
+		grillePokemon.add(description, 1, 3);
+		
+		this.actionRetourVersVueListePokemon = new Button("Retour");
+		this.actionRetourVersVueListePokemon.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				controleur.notifierRetourVersVueListePokemon();
+			}
+		});
 		
 		panneau.getChildren().add(new Label("Ajouter un Pokemon")); 
 		panneau.getChildren().add(grillePokemon);
 		panneau.getChildren().add(this.actionEnregistrerPokemon);
+		panneau.getChildren().add(this.actionRetourVersVueListePokemon);
 	}
 	
 	public Pokemon demanderPokemon() {

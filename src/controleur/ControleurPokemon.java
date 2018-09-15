@@ -85,5 +85,15 @@ public class ControleurPokemon {
 		this.pokemonDAO.modifierPokemon(pokemon);
 		this.navigateur.naviguerVersVueListePokemon();
 	}
+
+	public void notifierNaviguerVersVueAjouterPokemon() {
+		System.out.println("ControleurPokemon : notifierNaviguerVersVueAjouterPokemon()");
+		this.navigateur.naviguerVersVueAjouterPokemon();
+	}
+
+	public void notifierRetourVersVueListePokemon() {
+		System.out.println("ControleurPokemon : notifierRetourVersVueListePokemon()");
+		this.navigateur.naviguerVersVueListePokemon();
+	}
 	
 }
