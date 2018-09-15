@@ -1,6 +1,7 @@
 package donnee;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -54,17 +55,19 @@ public class PokemonDAO {
 	public Pokemon getUnPokemon(int idPokemon) {
 		System.out.println("PokemonDAO : rapporterPokemon(int idPokemon) => idPokemon = " + idPokemon);
 		
-		Statement requeteLePokemon;
 		TypePokemonDAO typePokemonDAO = new TypePokemonDAO();
 		TypePokemon typeDuPokemon = new TypePokemon();
+
+		PreparedStatement requeteLePokemon;
 		
 		try {
-			requeteLePokemon = connection.createStatement();
 			// TODO factoriser chaines magiques dans des constantes - si possible interfaces
-			// TODO changer pour requete preparee
-			String SQL_RAPPORTER_POKEMON = "SELECT * FROM pokemon WHERE id = " + idPokemon;
-			//System.out.println(SQL_RAPPORTER_POKEMON);
-			ResultSet curseurPokemon = requeteLePokemon.executeQuery(SQL_RAPPORTER_POKEMON);
+			
+			String SQL_RAPPORTER_POKEMON = "SELECT * FROM pokemon WHERE id = ?";
+			requeteLePokemon = connection.prepareStatement(SQL_RAPPORTER_POKEMON);
+			requeteLePokemon.setInt(1, idPokemon);
+			
+			ResultSet curseurPokemon = requeteLePokemon.executeQuery();
 			curseurPokemon.next();
 			
 			int id = curseurPokemon.getInt("id");
