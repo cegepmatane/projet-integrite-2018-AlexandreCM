@@ -70,6 +70,7 @@ public class ControleurPokemon {
 		System.out.println("ControleurPokemon : notifierAjouterPokemon()");
 		Pokemon pokemon = this.navigateur.getVueAjouterPokemon().demanderPokemon();
 		this.pokemonDAO.ajouterPokemon(pokemon);
+		this.vueListePokemon.afficherListePokemon(this.pokemonDAO.getListePokemon()); // TODO optimiser
 		this.navigateur.naviguerVersVueListePokemon();
 	}
 	
@@ -83,6 +84,7 @@ public class ControleurPokemon {
 		System.out.println("ControleurPokemon : notifierEnregistrerModificationPokemon()");
 		Pokemon pokemon = this.navigateur.getVueModifierPokemon().demanderModificationPokemon();
 		this.pokemonDAO.modifierPokemon(pokemon);
+		this.vueListePokemon.afficherListePokemon(this.pokemonDAO.getListePokemon()); // TODO optimiser
 		this.navigateur.naviguerVersVueListePokemon();
 	}
 
