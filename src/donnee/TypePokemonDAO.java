@@ -1,6 +1,7 @@
 package donnee;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -29,7 +30,6 @@ public class TypePokemonDAO {
 				
 				int id = curseurListeTypesPokemon.getInt("id");
 				String libelle = curseurListeTypesPokemon.getString("libelle");
-				//System.out.println(id + " corespond au type " + libelle);
 				
 				TypePokemon typePokemon = new TypePokemon(id, libelle);
 				listeTypesPokemon.add(typePokemon);
@@ -45,11 +45,13 @@ public class TypePokemonDAO {
 		//System.out.println("TypePokemonDAO : getTypeUnPokemon()");
 		
 		TypePokemon typeDuPokemon = new TypePokemon();
-		Statement requeteTypeUnPokemon;
 		
 		try {
-			requeteTypeUnPokemon = connection.createStatement();
-			ResultSet curseurTypeUnPokemon = requeteTypeUnPokemon.executeQuery("SELECT * FROM \"typePokemon\" WHERE id = " + idTypePokemon);
+			String sqlGetTypeUnPokemon = "SELECT * FROM \"typePokemon\" WHERE id = ?";
+			PreparedStatement requeteGetUnTypeUnPokemon = connection.prepareStatement(sqlGetTypeUnPokemon);
+			requeteGetUnTypeUnPokemon.setInt(1, idTypePokemon);
+			
+			ResultSet curseurTypeUnPokemon = requeteGetUnTypeUnPokemon.executeQuery();
 			curseurTypeUnPokemon.next();
 			
 			int id = curseurTypeUnPokemon.getInt("id");

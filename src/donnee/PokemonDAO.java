@@ -24,11 +24,9 @@ public class PokemonDAO {
 		ArrayList<Pokemon> listePokemon =  new ArrayList<Pokemon>();
 		TypePokemonDAO typePokemonDAO = new TypePokemonDAO();
 		TypePokemon typeDuPokemon = new TypePokemon();
-		
-		Statement requeteListePokemon;
-		
+			
 		try {
-			requeteListePokemon = connection.createStatement();
+			Statement requeteListePokemon = connection.createStatement();
 			ResultSet curseurListePokemon = requeteListePokemon.executeQuery("SELECT * FROM pokemon ORDER BY id");
 			while(curseurListePokemon.next()) {
 				
@@ -57,17 +55,15 @@ public class PokemonDAO {
 		
 		TypePokemonDAO typePokemonDAO = new TypePokemonDAO();
 		TypePokemon typeDuPokemon = new TypePokemon();
-
-		PreparedStatement requeteLePokemon;
 		
 		try {
 			// TODO factoriser chaines magiques dans des constantes - si possible interfaces
 			
 			String SQL_RAPPORTER_POKEMON = "SELECT * FROM pokemon WHERE id = ?";
-			requeteLePokemon = connection.prepareStatement(SQL_RAPPORTER_POKEMON);
-			requeteLePokemon.setInt(1, idPokemon);
+			PreparedStatement requeteGetUnPokemon = connection.prepareStatement(SQL_RAPPORTER_POKEMON);
+			requeteGetUnPokemon.setInt(1, idPokemon);
 			
-			ResultSet curseurPokemon = requeteLePokemon.executeQuery();
+			ResultSet curseurPokemon = requeteGetUnPokemon.executeQuery();
 			curseurPokemon.next();
 			
 			int id = curseurPokemon.getInt("id");
