@@ -13,16 +13,24 @@ import modele.Pokemon;
 
 public class VueListePokemon extends Scene {
 	
-	protected GridPane grillePokemon;
-	//protected Button actionModifierPokemon = null;
 	private ControleurPokemon controleur = null;
 
+	protected GridPane grillePokemon;
+	//protected Button actionModifierPokemon = null;
+
+	public void setControleur(ControleurPokemon controleur) {
+		this.controleur = controleur;
+	}
+	
 	public VueListePokemon() {
 		super(new GridPane(), 400,400);
+		System.out.println("VueListePokemon : VueListePokemon()");
+		
 		grillePokemon = (GridPane) this.getRoot();
 	}
 	
 	public void afficherListePokemon(ArrayList<Pokemon> listePokemon) {
+		System.out.println("VueListePokemon : afficherListePokemon()");
 		
 		this.grillePokemon.getChildren().clear();
 		
@@ -31,13 +39,14 @@ public class VueListePokemon extends Scene {
 		this.grillePokemon.add(new Label("TypePokemon"), 1, numero);			
 		this.grillePokemon.add(new Label("Poids"), 2, numero);			
 		
+		//this.actionModifierPokemon = new Button("Modifier");
 		for(Pokemon pokemon : listePokemon) {
 			
 			Button actionModifierPokemon = new Button("Modifier");
 			actionModifierPokemon.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					controleur.notifierNaviguerVersModifierPokemon(pokemon);
+					controleur.notifierNaviguerVersVueModifierPokemon(pokemon);
 				}
 			});
 			
@@ -49,9 +58,4 @@ public class VueListePokemon extends Scene {
 		}
 		
 	}
-	
-	public void setControleur(ControleurPokemon controleur) {
-		this.controleur = controleur;
-	}
-
 }

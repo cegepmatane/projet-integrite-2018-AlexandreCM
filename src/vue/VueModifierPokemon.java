@@ -32,8 +32,8 @@ public class VueModifierPokemon extends Scene {
 	}
 	
 	public VueModifierPokemon() {
-		
 		super(new VBox(), 400, 400);
+		System.out.println("VueModifierPokemon : VueModifierPokemon()");
 		VBox panneau = (VBox) this.getRoot();
 		GridPane grillePokemon = new GridPane();
 		this.actionEnregistrerModificationPokemon = new Button("Enregistrer");
@@ -41,6 +41,7 @@ public class VueModifierPokemon extends Scene {
 		this.actionEnregistrerModificationPokemon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
+				System.out.println("VueModifierPokemon : bouton actionEnregistrerModificationPokemon vers controleur.notifierEnregistrerModificationPokemon()");
 				controleur.notifierEnregistrerModificationPokemon();
 			}
  		});
@@ -54,7 +55,7 @@ public class VueModifierPokemon extends Scene {
 		listeTypes = typePokemonDAO.getListeTypesPokemon();
 		
 		typePokemon = new ComboBox<TypePokemon>();
-		typePokemon.setPromptText("Email address");
+		typePokemon.setPromptText("Selectionnez un type");
 		typePokemon.getItems().addAll(listeTypes);
 		typePokemon.setMinWidth(200);
 		grillePokemon.add(new Label("Type : "), 0, 1);
@@ -75,6 +76,8 @@ public class VueModifierPokemon extends Scene {
 	}
 	
 	public void afficherPokemon(Pokemon pokemon) {
+		System.out.println("VueModifierPokemon : afficherPokemon()");
+		
 		this.id = pokemon.getId();
 		this.nom.setText(pokemon.getNom());
 		this.typePokemon.setValue(pokemon.getType());
@@ -83,7 +86,7 @@ public class VueModifierPokemon extends Scene {
 	}
 	
 	public Pokemon demanderModificationPokemon() {
-		System.out.println("demanderModificationPokemon()");
+		System.out.println("VueModifierPokemon : demanderModificationPokemon()");
 		
 		Pokemon pokemon = new Pokemon(
 				this.nom.getText(), 
@@ -92,7 +95,6 @@ public class VueModifierPokemon extends Scene {
 				this.description.getText()
 		);
 		pokemon.setId(id);
-		System.out.println("type = " + pokemon.getType().getLibelle());
 		//System.out.println(pokemon.getId() +" : "+ pokemon.getNom() + " de type " + pokemon.getType() + " pese " + pokemon.getPoids() + "kg ");
 		return pokemon;
 	}

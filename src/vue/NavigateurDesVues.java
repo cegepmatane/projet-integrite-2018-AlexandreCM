@@ -14,9 +14,8 @@ public class NavigateurDesVues extends Application {
 	private VueAjouterPokemon vueAjouterPokemon = null;
 	private VueModifierPokemon vueModifierPokemon = null;
 	
-
-	
 	public NavigateurDesVues() {
+		System.out.println("NavigateurDesVues : NavigateurDesVues()");
 		
 		this.vuePokemon = new VuePokemon();
 		this.vueListePokemon = new VueListePokemon();
@@ -26,11 +25,10 @@ public class NavigateurDesVues extends Application {
 
 	@Override
 	public void start(Stage stade) throws Exception {
+		System.out.println("NavigateurDesVues : start");
 		
 		this.stade = stade;
 		stade.setTitle("Pokemon");
-		//this.stade.setScene(null);
-		//stade.show();
 		
 		this.controleur = ControleurPokemon.getInstance();
 		this.controleur.activerVues(this);

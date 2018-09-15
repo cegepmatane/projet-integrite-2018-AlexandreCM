@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import modele.TypePokemon;
 
 public class TypePokemonDAO {
+
+	private Connection connection = null;
 	String BASEDEDONNEES_DRIVER = "org.postgresql.Driver";
 	String BASEDEDONNEES_URL = "jdbc:postgresql://localhost:5432/pokemon";
 	String BASEDEDONNEES_USAGER = "postgres";
 	String BASEDEDONNEES_MOTDEPASSE = "root";
-	private Connection connection = null;
 	
 	public TypePokemonDAO() {
 		try {
@@ -31,9 +32,11 @@ public class TypePokemonDAO {
 	}
 	
 	public ArrayList<TypePokemon> getListeTypesPokemon() {
+		System.out.println("TypePokemonDAO : getListeTypesPokemon()");
 		
 		ArrayList<TypePokemon> listeTypesPokemon =  new ArrayList<TypePokemon>();
 		Statement requeteListeTypesPokemon;
+		
 		try {
 			requeteListeTypesPokemon = connection.createStatement();
 			ResultSet curseurListeTypesPokemon = requeteListeTypesPokemon.executeQuery("SELECT * FROM \"typePokemon\"");
@@ -41,7 +44,6 @@ public class TypePokemonDAO {
 				
 				int id = curseurListeTypesPokemon.getInt("id");
 				String libelle = curseurListeTypesPokemon.getString("libelle");
-				
 				//System.out.println(id + " corespond au type " + libelle);
 				
 				TypePokemon typePokemon = new TypePokemon(id, libelle);
@@ -55,6 +57,7 @@ public class TypePokemonDAO {
 	}
 	
 	public TypePokemon getTypeUnPokemon(int idTypePokemon) {
+		//System.out.println("TypePokemonDAO : getTypeUnPokemon()");
 		
 		TypePokemon typeDuPokemon = new TypePokemon();
 		Statement requeteTypeUnPokemon;
@@ -72,7 +75,6 @@ public class TypePokemonDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return typeDuPokemon;
 	}
 

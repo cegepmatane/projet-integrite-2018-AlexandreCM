@@ -18,17 +18,22 @@ import modele.TypePokemon;
 
 public class VueAjouterPokemon extends Scene {
 	
+	private ControleurPokemon controleur = null;
+
 	protected TextField nom;
 	protected ComboBox<TypePokemon> typePokemon;
 	protected TextField poids;
 	protected TextField description;
 	protected Button actionEnregistrerPokemon = null;
-	
-	private ControleurPokemon controleur = null;
 
+	public void setControleur(ControleurPokemon controleur) {
+		this.controleur = controleur;
+	}
+	
 	public VueAjouterPokemon() {
-		
 		super(new VBox(), 400, 400);
+		System.out.println("VueAjouterPokemon : VueAjouterPokemon()");
+		
 		VBox panneau = (VBox) this.getRoot();
 		GridPane grillePokemon = new GridPane();
 		this.actionEnregistrerPokemon = new Button("Enregistrer");
@@ -36,6 +41,7 @@ public class VueAjouterPokemon extends Scene {
 		this.actionEnregistrerPokemon.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
+				System.out.println("VueAjouterPokemon : bouton actionEnregistrerPokemon vers controleur.notifierAjouterPokemon()");
 				controleur.notifierAjouterPokemon();
 			}
  		});
@@ -49,6 +55,7 @@ public class VueAjouterPokemon extends Scene {
 		listeTypes = typePokemonDAO.getListeTypesPokemon();
 		
 		typePokemon = new ComboBox<TypePokemon>();
+		typePokemon.setPromptText("Selectionnez un type");
 		typePokemon.getItems().addAll(listeTypes);
 		typePokemon.setMinWidth(200);
 		grillePokemon.add(new Label("Type : "), 0, 1);
@@ -65,23 +72,18 @@ public class VueAjouterPokemon extends Scene {
 		panneau.getChildren().add(new Label("Ajouter un Pokemon")); 
 		panneau.getChildren().add(grillePokemon);
 		panneau.getChildren().add(this.actionEnregistrerPokemon);
-		
 	}
 	
 	public Pokemon demanderPokemon() {
-
+		System.out.println("VueAjouterPokemon : demanderPokemon()");
+		
 		Pokemon pokemon = new Pokemon(
 				this.nom.getText(), 
 				this.typePokemon.getValue(),
 				Double.parseDouble(this.poids.getText()), 
 				this.description.getText()
 		);
-		System.out.println(pokemon.getNom() + " de type " + pokemon.getType() + " pese " + pokemon.getPoids() + "kg ");
+		//System.out.println(pokemon.getNom() + " de type " + pokemon.getType() + " pese " + pokemon.getPoids() + "kg ");
 		return pokemon;
 	}
-	
-	public void setControleur(ControleurPokemon controleur) {
-		this.controleur = controleur;
-	}
-
 }

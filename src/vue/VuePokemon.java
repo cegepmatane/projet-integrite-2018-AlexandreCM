@@ -8,15 +8,20 @@ import modele.Pokemon;
 
 public class VuePokemon extends Scene {
 	
+	private ControleurPokemon controleur = null;
+
 	protected Label nom;
 	protected Label type;
 	protected Label description;
 	
-	private ControleurPokemon controleur = null;
-
+	public void setControleur(ControleurPokemon controleur) {
+		this.controleur = controleur;
+	}
+	
 	public VuePokemon() {
-		
 		super(new GridPane(),400,400);
+		System.out.println("VuePokemon : VuePokemon()");
+		
 		GridPane grillePokemon = (GridPane) this.getRoot();
 		
 		nom = new Label("Carapuce");
@@ -34,12 +39,9 @@ public class VuePokemon extends Scene {
 	}
 	
 	public void afficherPokemon(Pokemon pokemon) {
+		System.out.println("VuePokemon : afficherPokemon()");
+		
 		this.nom.setText(pokemon.getNom());
-		//this.type.setText(pokemon.getType());
 		this.description.setText(pokemon.getDescription());
-	}
-	
-	public void setControleur(ControleurPokemon controleur) {
-		this.controleur = controleur;
 	}
 }

@@ -25,35 +25,9 @@ public class ControleurPokemon {
 	TypePokemonDAO typePokemonDAO = null;
 	
 	public ControleurPokemon() {
-		System.out.println("Initialisation controleurs");
+		System.out.println("ControleurPokemon : Initialisation controleurs");
 		this.pokemonDAO = new PokemonDAO();
 		this.typePokemonDAO = new TypePokemonDAO();
-	}
-	
-	public void activerVues(NavigateurDesVues navigateur) {
-		
-		this.navigateur = navigateur;
-		
-		this.vueAjouterPokemon = navigateur.getVueAjouterPokemon();
-		this.vueModifierPokemon = navigateur.getVueModifierPokemon();
-		this.vuePokemon = navigateur.getVuePokemon();
-		this.vueListePokemon= navigateur.getVueListePokemon();
-		
-		//// TEST ////
-		TypePokemon typePokemon = new TypePokemon(1, "Normal");
-		Pokemon pokemon = (new Pokemon("Salameche", typePokemon, 5, "pokemon terrestre"));
-		this.vuePokemon.afficherPokemon(pokemon);
-		
-		/// TEST ///
-		PokemonDAO pokemonDAO = new PokemonDAO();
-		ArrayList<Pokemon> listePokemon = pokemonDAO.listePokemon();
-		this.vueListePokemon.afficherListePokemon(listePokemon);
-		
-		//// afficher une vue ////
-		//this.navigateur.naviguerVersVuePokemon();
-		this.navigateur.naviguerVersVueListePokemon();
-		//this.navigateur.naviguerVersVueAjouterPokemon();
-		//this.navigateur.naviguerVersVueModifierPokemon();
 	}
 	
 	// SINGLETON DEBUT
@@ -65,22 +39,48 @@ public class ControleurPokemon {
 	}
 	// SINGLETON FINI
 	
+	public void activerVues(NavigateurDesVues navigateur) {
+		
+		this.navigateur = navigateur;
+		
+		this.vueAjouterPokemon = navigateur.getVueAjouterPokemon();
+		this.vueModifierPokemon = navigateur.getVueModifierPokemon();
+		this.vuePokemon = navigateur.getVuePokemon();
+		this.vueListePokemon= navigateur.getVueListePokemon();
+		
+		//// TEST ////
+		TypePokemon typePokemon = new TypePokemon(1, "feu");
+		Pokemon pokemon = (new Pokemon("Salameche", typePokemon, 5.2, "pokemon terrestre"));
+		this.vuePokemon.afficherPokemon(pokemon);
+		
+		/// TEST ///
+		PokemonDAO pokemonDAO = new PokemonDAO();
+		ArrayList<Pokemon> listePokemon = pokemonDAO.getListePokemon();
+		this.vueListePokemon.afficherListePokemon(listePokemon);
+		
+		//// afficher une vue ////
+		//this.navigateur.naviguerVersVuePokemon();
+		this.navigateur.naviguerVersVueListePokemon();
+		//this.navigateur.naviguerVersVueAjouterPokemon();
+		//this.navigateur.naviguerVersVueModifierPokemon();
+	}
+	
 	public void notifierAjouterPokemon()
 	{
-		System.out.println("ControleurPokemon.notifierEnregistrerPokemon()");
+		System.out.println("ControleurPokemon : notifierAjouterPokemon()");
 		Pokemon pokemon = this.navigateur.getVueAjouterPokemon().demanderPokemon();
 		this.pokemonDAO.ajouterPokemon(pokemon);
 		this.navigateur.naviguerVersVueListePokemon();
 	}
 	
-	public void notifierNaviguerVersModifierPokemon(Pokemon pokemon) {
-		System.out.println("ControleurMouton.notifierEditerMouton() : " + pokemon.getNom());
-		this.vueModifierPokemon.afficherPokemon(this.pokemonDAO.rapporterPokemon(pokemon.getId()));
+	public void notifierNaviguerVersVueModifierPokemon(Pokemon pokemon) {
+		System.out.println("ControleurPokemon : notifierNaviguerVersVueModifierPokemon(Pokemon pokemon) => " + pokemon.getNom());
+		this.vueModifierPokemon.afficherPokemon(this.pokemonDAO.getUnPokemon(pokemon.getId()));
 		this.navigateur.naviguerVersVueModifierPokemon();
 	}
 	
 	public void notifierEnregistrerModificationPokemon() {
-		System.out.println("ControleurPokemon.notifierEnregistrerModificationPokemon()");
+		System.out.println("ControleurPokemon : notifierEnregistrerModificationPokemon()");
 		Pokemon pokemon = this.navigateur.getVueModifierPokemon().demanderModificationPokemon();
 		this.pokemonDAO.modifierPokemon(pokemon);
 		this.navigateur.naviguerVersVueListePokemon();
