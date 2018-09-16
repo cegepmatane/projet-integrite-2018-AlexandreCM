@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import modele.Pokemon;
 import modele.TypePokemon;
 
-public class PokemonDAO {
+public class PokemonDAO implements PokemonSQL{
 	
 	private Connection connection = null;
 	
@@ -27,7 +27,7 @@ public class PokemonDAO {
 			
 		try {
 			Statement requeteListePokemon = connection.createStatement();
-			ResultSet curseurListePokemon = requeteListePokemon.executeQuery("SELECT * FROM pokemon ORDER BY id");
+			ResultSet curseurListePokemon = requeteListePokemon.executeQuery(SQL_LISTER_POKEMON);
 			while(curseurListePokemon.next()) {
 				
 				int id = curseurListePokemon.getInt("id");
@@ -57,10 +57,7 @@ public class PokemonDAO {
 		TypePokemon typeDuPokemon = new TypePokemon();
 		
 		try {
-			// TODO factoriser chaines magiques dans des constantes - si possible interfaces
-			
-			String SQL_RAPPORTER_POKEMON = "SELECT * FROM pokemon WHERE id = ?";
-			PreparedStatement requeteGetUnPokemon = connection.prepareStatement(SQL_RAPPORTER_POKEMON);
+			PreparedStatement requeteGetUnPokemon = connection.prepareStatement(SQL_SELECT_POKEMON);
 			requeteGetUnPokemon.setInt(1, idPokemon);
 			
 			ResultSet curseurPokemon = requeteGetUnPokemon.executeQuery();
@@ -87,8 +84,7 @@ public class PokemonDAO {
 		System.out.println("PokemonDAO : ajouterPokemon(Pokemon pokemon) => pokemon = " + pokemon.getNom());
 		
 		try {
-			String sqlAjouterPokemon = "INSERT INTO pokemon(nom, \"idTypePokemon\", poids, description) VALUES(?, ?, ?, ?)";
-			PreparedStatement requeteAjouterPokemon = connection.prepareStatement(sqlAjouterPokemon);
+			PreparedStatement requeteAjouterPokemon = connection.prepareStatement(SQL_INSERT_POKEMON);
 			
 			requeteAjouterPokemon.setString(1, pokemon.getNom());
 			requeteAjouterPokemon.setInt(2, pokemon.getType().getId());
@@ -106,8 +102,7 @@ public class PokemonDAO {
 		System.out.println("PokemonDAO : modifierPokemon(Pokemon pokemon) => pokemon = " + pokemon.getNom());
 		
 		try {
-			String sqlModifierPokemon = "UPDATE public.pokemon SET nom= ?, \"idTypePokemon\"= ?, poids= ?, description= ? WHERE id =  ?;";
-			PreparedStatement requeteModifierPokemon = connection.prepareStatement(sqlModifierPokemon);
+			PreparedStatement requeteModifierPokemon = connection.prepareStatement(SQL_UPDATE_POKEMON);
 
 			requeteModifierPokemon.setString(1, pokemon.getNom());
 			requeteModifierPokemon.setInt(2, pokemon.getType().getId());
