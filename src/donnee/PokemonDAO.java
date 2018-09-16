@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import modele.Pokemon;
 import modele.TypePokemon;
 
-public class PokemonDAO implements PokemonSQL{
+public class PokemonDAO implements PokemonSQL {
 	
 	private Connection connection = null;
 	
