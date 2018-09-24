@@ -55,6 +55,43 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: journal; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.journal (
+    id integer NOT NULL,
+    moment time with time zone NOT NULL,
+    operation text NOT NULL,
+    description text,
+    objet text NOT NULL
+);
+
+
+ALTER TABLE public.journal OWNER TO postgres;
+
+--
+-- Name: journal_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.journal_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.journal_id_seq OWNER TO postgres;
+
+--
+-- Name: journal_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.journal_id_seq OWNED BY public.journal.id;
+
+
+--
 -- Name: pokemon; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -63,7 +100,7 @@ CREATE TABLE public.pokemon (
     nom text,
     poids double precision,
     description text,
-    idTypePokemon integer
+    idtypepokemon integer
 );
 
 
@@ -92,16 +129,16 @@ ALTER SEQUENCE public.pokemon_id_seq OWNED BY public.pokemon.id;
 
 
 --
--- Name: typePokemon; Type: TABLE; Schema: public; Owner: postgres
+-- Name: typepokemon; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.typePokemon (
+CREATE TABLE public.typepokemon (
     id integer NOT NULL,
     libelle text
 );
 
 
-ALTER TABLE public.typePokemon OWNER TO postgres;
+ALTER TABLE public.typepokemon OWNER TO postgres;
 
 --
 -- Name: type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -122,7 +159,14 @@ ALTER TABLE public.type_id_seq OWNER TO postgres;
 -- Name: type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.type_id_seq OWNED BY public.typePokemon.id;
+ALTER SEQUENCE public.type_id_seq OWNED BY public.typepokemon.id;
+
+
+--
+-- Name: journal id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.journal ALTER COLUMN id SET DEFAULT nextval('public.journal_id_seq'::regclass);
 
 
 --
@@ -133,17 +177,23 @@ ALTER TABLE ONLY public.pokemon ALTER COLUMN id SET DEFAULT nextval('public.poke
 
 
 --
--- Name: typePokemon id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: typepokemon id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.typePokemon ALTER COLUMN id SET DEFAULT nextval('public.type_id_seq'::regclass);
+ALTER TABLE ONLY public.typepokemon ALTER COLUMN id SET DEFAULT nextval('public.type_id_seq'::regclass);
+
+
+--
+-- Data for Name: journal; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
 
 
 --
 -- Data for Name: pokemon; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.pokemon VALUES (1, 'Bulbizarre', 6.9, 'Il y a une graine sur son dos. Il absorbe les rayons du soleil pour faire doucement pousser la graine.', 4);
+INSERT INTO public.pokemon VALUES (1, 'Bulbizarre', 7, 'Il y a une graine sur son dos. Il absorbe les rayons du soleil pour faire doucement pousser la graine.', 4);
 INSERT INTO public.pokemon VALUES (2, 'Herbizarre', 12, 'Un bourgeon a poussé sur le dos de ce Pokémon. Lorsqu’il commence à se prélasser au soleil, ça signifie que son bourgeon va éclore, donnant naissance à une fleur.', 4);
 INSERT INTO public.pokemon VALUES (3, 'Florizarre', 155.5, 'Une belle fleur se trouve sur le dos de Florizarre. Le parfum de cette fleur peut apaiser les gens.', 4);
 INSERT INTO public.pokemon VALUES (4, 'Salameche', 8.5, 'La flamme qui brûle au bout de sa queue indique l’humeur de ce Pokémon. Elle vacille lorsque Salamèche est content.', 2);
@@ -156,28 +206,34 @@ INSERT INTO public.pokemon VALUES (25, 'Pikachu', 6, 'Un projet de centrale éle
 INSERT INTO public.pokemon VALUES (26, 'Raichu', 30, 'Ce Pokémon peut accumuler jusqu’à 100 000 volts. Il peut ainsi assommer un éléphant juste en le touchant.', 5);
 
 
+--
+-- Data for Name: typepokemon; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.typepokemon VALUES (1, 'Normal');
+INSERT INTO public.typepokemon VALUES (2, 'Feu');
+INSERT INTO public.typepokemon VALUES (3, 'Eau');
+INSERT INTO public.typepokemon VALUES (4, 'Plante');
+INSERT INTO public.typepokemon VALUES (5, 'Électrik');
+INSERT INTO public.typepokemon VALUES (6, 'Glace');
+INSERT INTO public.typepokemon VALUES (7, 'Combat');
+INSERT INTO public.typepokemon VALUES (8, 'Poison');
+INSERT INTO public.typepokemon VALUES (9, 'Sol');
+INSERT INTO public.typepokemon VALUES (10, 'Vol');
+INSERT INTO public.typepokemon VALUES (11, 'Psy');
+INSERT INTO public.typepokemon VALUES (12, 'Insect');
+INSERT INTO public.typepokemon VALUES (13, 'Roche');
+INSERT INTO public.typepokemon VALUES (14, 'Spectre');
+INSERT INTO public.typepokemon VALUES (15, 'Dragon');
+INSERT INTO public.typepokemon VALUES (16, 'Ténèbre');
+INSERT INTO public.typepokemon VALUES (17, 'Acier');
+
 
 --
--- Data for Name: typePokemon; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Name: journal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.typePokemon VALUES (1, 'Normal');
-INSERT INTO public.typePokemon VALUES (2, 'Feu');
-INSERT INTO public.typePokemon VALUES (3, 'Eau');
-INSERT INTO public.typePokemon VALUES (4, 'Plante');
-INSERT INTO public.typePokemon VALUES (5, 'Électrik');
-INSERT INTO public.typePokemon VALUES (6, 'Glace');
-INSERT INTO public.typePokemon VALUES (7, 'Combat');
-INSERT INTO public.typePokemon VALUES (8, 'Poison');
-INSERT INTO public.typePokemon VALUES (9, 'Sol');
-INSERT INTO public.typePokemon VALUES (10, 'Vol');
-INSERT INTO public.typePokemon VALUES (11, 'Psy');
-INSERT INTO public.typePokemon VALUES (12, 'Insect');
-INSERT INTO public.typePokemon VALUES (13, 'Roche');
-INSERT INTO public.typePokemon VALUES (14, 'Spectre');
-INSERT INTO public.typePokemon VALUES (15, 'Dragon');
-INSERT INTO public.typePokemon VALUES (16, 'Ténèbre');
-INSERT INTO public.typePokemon VALUES (17, 'Acier');
+SELECT pg_catalog.setval('public.journal_id_seq', 1, false);
 
 
 --
@@ -195,6 +251,14 @@ SELECT pg_catalog.setval('public.type_id_seq', 17, true);
 
 
 --
+-- Name: journal journal_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.journal
+    ADD CONSTRAINT journal_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: pokemon pokemon_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -203,10 +267,10 @@ ALTER TABLE ONLY public.pokemon
 
 
 --
--- Name: typePokemon type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: typepokemon type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.typePokemon
+ALTER TABLE ONLY public.typepokemon
     ADD CONSTRAINT type_pkey PRIMARY KEY (id);
 
 
@@ -214,7 +278,7 @@ ALTER TABLE ONLY public.typePokemon
 -- Name: fki_one_type_to_many_pokemon; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE INDEX fki_one_type_to_many_pokemon ON public.pokemon USING btree (idTypePokemon);
+CREATE INDEX fki_one_type_to_many_pokemon ON public.pokemon USING btree (idtypepokemon);
 
 
 --
@@ -222,7 +286,7 @@ CREATE INDEX fki_one_type_to_many_pokemon ON public.pokemon USING btree (idTypeP
 --
 
 ALTER TABLE ONLY public.pokemon
-    ADD CONSTRAINT one_type_to_many_pokemon FOREIGN KEY (idTypePokemon) REFERENCES public.typePokemon(id);
+    ADD CONSTRAINT one_type_to_many_pokemon FOREIGN KEY (idtypepokemon) REFERENCES public.typepokemon(id);
 
 
 --
