@@ -57,8 +57,13 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 CREATE FUNCTION public.journaliser() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
+
+DECLARE 
+	description text;
+	
 BEGIN
-	INSERT INTO journal(moment, operation, description, objet) VALUES (NOW(), 'Ajouter', 'pokemon', '{pika, electric}');
+	description := '{'|| NEW.nom ||'}';
+	INSERT INTO journal(moment, operation, description, objet) VALUES (NOW(), 'Ajouter', description, 'pokemon');
 	RETURN NEW;
 END
 $$;
@@ -209,6 +214,7 @@ INSERT INTO public.journal VALUES (3, '21:40:27.082386', 'Ajouter', 'pokemon', '
 INSERT INTO public.journal VALUES (4, '21:40:48.294058', 'Ajouter', 'pokemon', '{pika, electric}');
 INSERT INTO public.journal VALUES (5, '21:44:53.629097', 'Ajouter', 'pokemon', '{pika, electric}');
 INSERT INTO public.journal VALUES (6, '21:45:05.716014', 'Ajouter', 'pokemon', '{pika, electric}');
+INSERT INTO public.journal VALUES (7, '21:52:58.281433', 'Ajouter', '{raikou}', 'pokemon');
 
 
 --
@@ -228,6 +234,7 @@ INSERT INTO public.pokemon VALUES (25, 'Pikachu', 6, 'Un projet de centrale éle
 INSERT INTO public.pokemon VALUES (26, 'Raichu', 30, 'Ce Pokémon peut accumuler jusqu’à 100 000 volts. Il peut ainsi assommer un éléphant juste en le touchant.', 5);
 INSERT INTO public.pokemon VALUES (27, 'mew', NULL, NULL, NULL);
 INSERT INTO public.pokemon VALUES (28, 'mewtoo', NULL, NULL, NULL);
+INSERT INTO public.pokemon VALUES (30, 'raikou', NULL, NULL, NULL);
 
 
 --
@@ -257,14 +264,14 @@ INSERT INTO public.typepokemon VALUES (17, 'Acier');
 -- Name: journal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.journal_id_seq', 6, true);
+SELECT pg_catalog.setval('public.journal_id_seq', 7, true);
 
 
 --
 -- Name: pokemon_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.pokemon_id_seq', 29, true);
+SELECT pg_catalog.setval('public.pokemon_id_seq', 30, true);
 
 
 --
