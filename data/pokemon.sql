@@ -50,6 +50,19 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: journalier(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.journalier() RETURNS void
+    LANGUAGE sql
+    AS $$
+INSERT INTO journal(moment, operation, description, objet) VALUES (NOW(), 'Ajouter', 'pokemon', '{pika, electric}')
+$$;
+
+
+ALTER FUNCTION public.journalier() OWNER TO postgres;
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -60,7 +73,7 @@ SET default_with_oids = false;
 
 CREATE TABLE public.journal (
     id integer NOT NULL,
-    moment time with time zone NOT NULL,
+    moment time(6) without time zone NOT NULL,
     operation text NOT NULL,
     description text,
     objet text NOT NULL
@@ -187,13 +200,15 @@ ALTER TABLE ONLY public.typepokemon ALTER COLUMN id SET DEFAULT nextval('public.
 -- Data for Name: journal; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.journal VALUES (1, '21:23:16.305583', 'Ajouter', 'pokemon', '{pika, electric}');
+INSERT INTO public.journal VALUES (2, '21:25:03.548069', 'Ajouter', 'pokemon', '{pika, electric}');
 
 
 --
 -- Data for Name: pokemon; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.pokemon VALUES (1, 'Bulbizarre', 7, 'Il y a une graine sur son dos. Il absorbe les rayons du soleil pour faire doucement pousser la graine.', 4);
+INSERT INTO public.pokemon VALUES (1, 'Bulbizarre', 6.9000000000000004, 'Il y a une graine sur son dos. Il absorbe les rayons du soleil pour faire doucement pousser la graine.', 4);
 INSERT INTO public.pokemon VALUES (2, 'Herbizarre', 12, 'Un bourgeon a poussé sur le dos de ce Pokémon. Lorsqu’il commence à se prélasser au soleil, ça signifie que son bourgeon va éclore, donnant naissance à une fleur.', 4);
 INSERT INTO public.pokemon VALUES (3, 'Florizarre', 155.5, 'Une belle fleur se trouve sur le dos de Florizarre. Le parfum de cette fleur peut apaiser les gens.', 4);
 INSERT INTO public.pokemon VALUES (4, 'Salameche', 8.5, 'La flamme qui brûle au bout de sa queue indique l’humeur de ce Pokémon. Elle vacille lorsque Salamèche est content.', 2);
@@ -204,6 +219,7 @@ INSERT INTO public.pokemon VALUES (8, 'Carabaffe', 22.5, 'Les éraflures sur la 
 INSERT INTO public.pokemon VALUES (9, 'Tortank', 85.5, 'Tortank dispose de canons à eau émergeant de sa carapace. Ils sont très précis et peuvent envoyer des balles d’eau capables de faire mouche sur une cible située à plus de 50 m.', 3);
 INSERT INTO public.pokemon VALUES (25, 'Pikachu', 6, 'Un projet de centrale électrique fonctionnant en rassemblant une foule de Pikachu a été récemment annoncé.', 5);
 INSERT INTO public.pokemon VALUES (26, 'Raichu', 30, 'Ce Pokémon peut accumuler jusqu’à 100 000 volts. Il peut ainsi assommer un éléphant juste en le touchant.', 5);
+INSERT INTO public.pokemon VALUES (27, 'test', NULL, NULL, NULL);
 
 
 --
@@ -233,14 +249,14 @@ INSERT INTO public.typepokemon VALUES (17, 'Acier');
 -- Name: journal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.journal_id_seq', 1, false);
+SELECT pg_catalog.setval('public.journal_id_seq', 2, true);
 
 
 --
 -- Name: pokemon_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.pokemon_id_seq', 26, true);
+SELECT pg_catalog.setval('public.pokemon_id_seq', 27, true);
 
 
 --
