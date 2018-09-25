@@ -51,17 +51,20 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
--- Name: journalier(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: journaliser(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.journalier() RETURNS void
-    LANGUAGE sql
+CREATE FUNCTION public.journaliser() RETURNS trigger
+    LANGUAGE plpgsql
     AS $$
-INSERT INTO journal(moment, operation, description, objet) VALUES (NOW(), 'Ajouter', 'pokemon', '{pika, electric}')
+BEGIN
+	INSERT INTO journal(moment, operation, description, objet) VALUES (NOW(), 'Ajouter', 'pokemon', '{pika, electric}');
+	RETURN NEW;
+END
 $$;
 
 
-ALTER FUNCTION public.journalier() OWNER TO postgres;
+ALTER FUNCTION public.journaliser() OWNER TO postgres;
 
 SET default_tablespace = '';
 
@@ -202,6 +205,10 @@ ALTER TABLE ONLY public.typepokemon ALTER COLUMN id SET DEFAULT nextval('public.
 
 INSERT INTO public.journal VALUES (1, '21:23:16.305583', 'Ajouter', 'pokemon', '{pika, electric}');
 INSERT INTO public.journal VALUES (2, '21:25:03.548069', 'Ajouter', 'pokemon', '{pika, electric}');
+INSERT INTO public.journal VALUES (3, '21:40:27.082386', 'Ajouter', 'pokemon', '{pika, electric}');
+INSERT INTO public.journal VALUES (4, '21:40:48.294058', 'Ajouter', 'pokemon', '{pika, electric}');
+INSERT INTO public.journal VALUES (5, '21:44:53.629097', 'Ajouter', 'pokemon', '{pika, electric}');
+INSERT INTO public.journal VALUES (6, '21:45:05.716014', 'Ajouter', 'pokemon', '{pika, electric}');
 
 
 --
@@ -219,7 +226,8 @@ INSERT INTO public.pokemon VALUES (8, 'Carabaffe', 22.5, 'Les éraflures sur la 
 INSERT INTO public.pokemon VALUES (9, 'Tortank', 85.5, 'Tortank dispose de canons à eau émergeant de sa carapace. Ils sont très précis et peuvent envoyer des balles d’eau capables de faire mouche sur une cible située à plus de 50 m.', 3);
 INSERT INTO public.pokemon VALUES (25, 'Pikachu', 6, 'Un projet de centrale électrique fonctionnant en rassemblant une foule de Pikachu a été récemment annoncé.', 5);
 INSERT INTO public.pokemon VALUES (26, 'Raichu', 30, 'Ce Pokémon peut accumuler jusqu’à 100 000 volts. Il peut ainsi assommer un éléphant juste en le touchant.', 5);
-INSERT INTO public.pokemon VALUES (27, 'test', NULL, NULL, NULL);
+INSERT INTO public.pokemon VALUES (27, 'mew', NULL, NULL, NULL);
+INSERT INTO public.pokemon VALUES (28, 'mewtoo', NULL, NULL, NULL);
 
 
 --
@@ -249,14 +257,14 @@ INSERT INTO public.typepokemon VALUES (17, 'Acier');
 -- Name: journal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.journal_id_seq', 2, true);
+SELECT pg_catalog.setval('public.journal_id_seq', 6, true);
 
 
 --
 -- Name: pokemon_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.pokemon_id_seq', 27, true);
+SELECT pg_catalog.setval('public.pokemon_id_seq', 29, true);
 
 
 --
@@ -295,6 +303,13 @@ ALTER TABLE ONLY public.typepokemon
 --
 
 CREATE INDEX fki_one_type_to_many_pokemon ON public.pokemon USING btree (idtypepokemon);
+
+
+--
+-- Name: pokemon evenementajouterpokemon; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER evenementajouterpokemon BEFORE INSERT ON public.pokemon FOR EACH ROW EXECUTE PROCEDURE public.journaliser();
 
 
 --
