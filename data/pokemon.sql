@@ -59,13 +59,37 @@ CREATE FUNCTION public.journaliser() RETURNS trigger
     AS $$
 
 DECLARE 
-	description text;
+    objetAvant text;
+    objetApres text;
+    operation text;
 	
 BEGIN
-	description := '{'|| NEW.nom ||'}';
-	INSERT INTO journal(moment, operation, description, objet) VALUES (NOW(), 'Ajouter', description, 'pokemon');
-	RETURN NEW;
+	objetAvant := '{}';
+	objetApres := '{}';
+	
+	IF TG_OP = 'INSERT' THEN
+   		objetApres := '{'||NEW.nom||', '||NEW.poids||', '||NEW.description||', '||NEW.idTypePokemon||'}';
+        operation := 'AJOUTER';
+    END IF;
+	IF TG_OP = 'UPDATE' THEN
+     	objetAvant := '{'||OLD.nom||', '||OLD.poids||', '||OLD.description||', '||OLD.idTypePokemon||'}';
+    	objetApres := '{'||NEW.nom||', '||NEW.poids||', '||NEW.description||', '||NEW.idTypePokemon||'}';
+        operation := 'MODIFIER';
+    END IF;
+	IF TG_OP = 'DELETE' THEN
+    	objetAvant := '{'||OLD.nom||', '||OLD.poids||', '||OLD.description||', '||OLD.idTypePokemon||'}';
+        operation := 'EFFACER';
+    END IF;
+	
+ 	INSERT into journal(moment, operation, ancienobjet, nouvelobjet) VALUES(NOW(), operation, objetAvant, objetApres);
+	
+	IF TG_OP = 'DELETE' THEN
+		return OLD;
+	END IF; 
+	
+    return NEW;
 END
+
 $$;
 
 
@@ -81,10 +105,10 @@ SET default_with_oids = false;
 
 CREATE TABLE public.journal (
     id integer NOT NULL,
-    moment time(6) without time zone NOT NULL,
+    moment time(6) with time zone NOT NULL,
     operation text NOT NULL,
-    description text,
-    objet text NOT NULL
+    ancienobjet text NOT NULL,
+    nouvelobjet text NOT NULL
 );
 
 
@@ -208,13 +232,17 @@ ALTER TABLE ONLY public.typepokemon ALTER COLUMN id SET DEFAULT nextval('public.
 -- Data for Name: journal; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.journal VALUES (1, '21:23:16.305583', 'Ajouter', 'pokemon', '{pika, electric}');
-INSERT INTO public.journal VALUES (2, '21:25:03.548069', 'Ajouter', 'pokemon', '{pika, electric}');
-INSERT INTO public.journal VALUES (3, '21:40:27.082386', 'Ajouter', 'pokemon', '{pika, electric}');
-INSERT INTO public.journal VALUES (4, '21:40:48.294058', 'Ajouter', 'pokemon', '{pika, electric}');
-INSERT INTO public.journal VALUES (5, '21:44:53.629097', 'Ajouter', 'pokemon', '{pika, electric}');
-INSERT INTO public.journal VALUES (6, '21:45:05.716014', 'Ajouter', 'pokemon', '{pika, electric}');
-INSERT INTO public.journal VALUES (7, '21:52:58.281433', 'Ajouter', '{raikou}', 'pokemon');
+INSERT INTO public.journal VALUES (1, '21:23:16.305583-04', 'Ajouter', 'pokemon', '{pika, electric}');
+INSERT INTO public.journal VALUES (2, '21:25:03.548069-04', 'Ajouter', 'pokemon', '{pika, electric}');
+INSERT INTO public.journal VALUES (3, '21:40:27.082386-04', 'Ajouter', 'pokemon', '{pika, electric}');
+INSERT INTO public.journal VALUES (4, '21:40:48.294058-04', 'Ajouter', 'pokemon', '{pika, electric}');
+INSERT INTO public.journal VALUES (5, '21:44:53.629097-04', 'Ajouter', 'pokemon', '{pika, electric}');
+INSERT INTO public.journal VALUES (6, '21:45:05.716014-04', 'Ajouter', 'pokemon', '{pika, electric}');
+INSERT INTO public.journal VALUES (7, '21:52:58.281433-04', 'Ajouter', '{raikou}', 'pokemon');
+INSERT INTO public.journal VALUES (8, '22:29:17.258026-04', 'AJOUTER', '{}', '{suicune,20.2,Vent du nord,4}');
+INSERT INTO public.journal VALUES (9, '22:31:15.394991-04', 'AJOUTER', '{}', '{Entei, 25.1, Lion du feu, 2}');
+INSERT INTO public.journal VALUES (10, '22:34:55.592769-04', 'MODIFIER', '{suicune, 20.2, Vent du nord, 4}', '{suicune, 20.2, Vent du nord, 3}');
+INSERT INTO public.journal VALUES (11, '22:36:18.495813-04', 'EFFACER', '{Entei, 25.1, Lion du feu, 2}', '{}');
 
 
 --
@@ -235,6 +263,7 @@ INSERT INTO public.pokemon VALUES (26, 'Raichu', 30, 'Ce Pokémon peut accumuler
 INSERT INTO public.pokemon VALUES (27, 'mew', NULL, NULL, NULL);
 INSERT INTO public.pokemon VALUES (28, 'mewtoo', NULL, NULL, NULL);
 INSERT INTO public.pokemon VALUES (30, 'raikou', NULL, NULL, NULL);
+INSERT INTO public.pokemon VALUES (38, 'suicune', 20.199999999999999, 'Vent du nord', 3);
 
 
 --
@@ -264,14 +293,14 @@ INSERT INTO public.typepokemon VALUES (17, 'Acier');
 -- Name: journal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.journal_id_seq', 7, true);
+SELECT pg_catalog.setval('public.journal_id_seq', 11, true);
 
 
 --
 -- Name: pokemon_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.pokemon_id_seq', 30, true);
+SELECT pg_catalog.setval('public.pokemon_id_seq', 39, true);
 
 
 --
@@ -317,6 +346,20 @@ CREATE INDEX fki_one_type_to_many_pokemon ON public.pokemon USING btree (idtypep
 --
 
 CREATE TRIGGER evenementajouterpokemon BEFORE INSERT ON public.pokemon FOR EACH ROW EXECUTE PROCEDURE public.journaliser();
+
+
+--
+-- Name: pokemon evenementeffacerpokemon; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER evenementeffacerpokemon BEFORE DELETE ON public.pokemon FOR EACH ROW EXECUTE PROCEDURE public.journaliser();
+
+
+--
+-- Name: pokemon evenementmodifierpokemon; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER evenementmodifierpokemon BEFORE UPDATE ON public.pokemon FOR EACH ROW EXECUTE PROCEDURE public.journaliser();
 
 
 --
