@@ -176,6 +176,19 @@ $$;
 
 ALTER FUNCTION public.nombrepokemon() OWNER TO postgres;
 
+--
+-- Name: sommepoidspokemon(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.sommepoidspokemon() RETURNS double precision
+    LANGUAGE sql
+    AS $$
+	select sum(poids) as sommePoidsPokemon from pokemon
+$$;
+
+
+ALTER FUNCTION public.sommepoidspokemon() OWNER TO postgres;
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
