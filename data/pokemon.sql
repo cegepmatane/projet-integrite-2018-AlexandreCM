@@ -151,6 +151,19 @@ $$;
 ALTER FUNCTION public.journaliser() OWNER TO postgres;
 
 --
+-- Name: moyennepoidspokemon(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.moyennepoidspokemon() RETURNS double precision
+    LANGUAGE sql
+    AS $$
+	select avg(poids) as moyennePoidsPokemon from pokemon
+$$;
+
+
+ALTER FUNCTION public.moyennepoidspokemon() OWNER TO postgres;
+
+--
 -- Name: nombrepokemon(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
