@@ -151,6 +151,32 @@ $$;
 ALTER FUNCTION public.journaliser() OWNER TO postgres;
 
 --
+-- Name: maxpoidspokemon(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.maxpoidspokemon() RETURNS double precision
+    LANGUAGE sql
+    AS $$
+	select max(poids) as maxPoidsPokemon from pokemon
+$$;
+
+
+ALTER FUNCTION public.maxpoidspokemon() OWNER TO postgres;
+
+--
+-- Name: minpoidspokemon(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.minpoidspokemon() RETURNS double precision
+    LANGUAGE sql
+    AS $$
+	select min(poids) as minPoidsPokemon from pokemon
+$$;
+
+
+ALTER FUNCTION public.minpoidspokemon() OWNER TO postgres;
+
+--
 -- Name: moyennepoidspokemon(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
