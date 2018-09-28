@@ -56,16 +56,16 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 CREATE FUNCTION public.effacertype() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$
-
-	
-BEGIN
-	DELETE FROM pokemon WHERE idtypepokemon = OLD.id;
-	
-    return NEW;
-END
-
-
+    AS $$
+
+	
+BEGIN
+	DELETE FROM pokemon WHERE idtypepokemon = OLD.id;
+	
+    return NEW;
+END
+
+
 $$;
 
 
@@ -77,78 +77,91 @@ ALTER FUNCTION public.effacertype() OWNER TO postgres;
 
 CREATE FUNCTION public.journaliser() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$
-
-
-
-DECLARE 
-
-    objetAvant text;
-
-    objetApres text;
-
-    operation text;
-
-	
-
-BEGIN
-
-	objetAvant := '{}';
-
-	objetApres := '{}';
-
-	
-
-	IF TG_OP = 'INSERT' THEN
-
-   		objetApres := '{'||NEW.nom||', '||NEW.poids||', '||NEW.description||', '||NEW.idTypePokemon||'}';
-
-        operation := 'AJOUTER';
-
-    END IF;
-
-	IF TG_OP = 'UPDATE' THEN
-
-     	objetAvant := '{'||OLD.nom||', '||OLD.poids||', '||OLD.description||', '||OLD.idTypePokemon||'}';
-
-    	objetApres := '{'||NEW.nom||', '||NEW.poids||', '||NEW.description||', '||NEW.idTypePokemon||'}';
-
-        operation := 'MODIFIER';
-
-    END IF;
-
-	IF TG_OP = 'DELETE' THEN
-
-    	objetAvant := '{'||OLD.nom||', '||OLD.poids||', '||OLD.description||', '||OLD.idTypePokemon||'}';
-
-        operation := 'EFFACER';
-
-    END IF;
-
-	
-
- 	INSERT into journal(moment, operation, ancienobjet, nouvelobjet) VALUES(NOW(), operation, objetAvant, objetApres);
-
-	
-
-	IF TG_OP = 'DELETE' THEN
-
-		return OLD;
-
-	END IF; 
-
-	
-
-    return NEW;
-
-END
-
-
-
+    AS $$
+
+
+
+DECLARE 
+
+    objetAvant text;
+
+    objetApres text;
+
+    operation text;
+
+	
+
+BEGIN
+
+	objetAvant := '{}';
+
+	objetApres := '{}';
+
+	
+
+	IF TG_OP = 'INSERT' THEN
+
+   		objetApres := '{'||NEW.nom||', '||NEW.poids||', '||NEW.description||', '||NEW.idTypePokemon||'}';
+
+        operation := 'AJOUTER';
+
+    END IF;
+
+	IF TG_OP = 'UPDATE' THEN
+
+     	objetAvant := '{'||OLD.nom||', '||OLD.poids||', '||OLD.description||', '||OLD.idTypePokemon||'}';
+
+    	objetApres := '{'||NEW.nom||', '||NEW.poids||', '||NEW.description||', '||NEW.idTypePokemon||'}';
+
+        operation := 'MODIFIER';
+
+    END IF;
+
+	IF TG_OP = 'DELETE' THEN
+
+    	objetAvant := '{'||OLD.nom||', '||OLD.poids||', '||OLD.description||', '||OLD.idTypePokemon||'}';
+
+        operation := 'EFFACER';
+
+    END IF;
+
+	
+
+ 	INSERT into journal(moment, operation, ancienobjet, nouvelobjet) VALUES(NOW(), operation, objetAvant, objetApres);
+
+	
+
+	IF TG_OP = 'DELETE' THEN
+
+		return OLD;
+
+	END IF; 
+
+	
+
+    return NEW;
+
+END
+
+
+
 $$;
 
 
 ALTER FUNCTION public.journaliser() OWNER TO postgres;
+
+--
+-- Name: nombrepokemon(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.nombrepokemon() RETURNS bigint
+    LANGUAGE sql
+    AS $$
+	select count(id) as nombrePokemon from pokemon
+$$;
+
+
+ALTER FUNCTION public.nombrepokemon() OWNER TO postgres;
 
 SET default_tablespace = '';
 
@@ -325,6 +338,22 @@ INSERT INTO public.journal VALUES (36, '09:51:28.475293-04', 'EFFACER', '{test, 
 INSERT INTO public.journal VALUES (37, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
 INSERT INTO public.journal VALUES (38, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
 INSERT INTO public.journal VALUES (39, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
+INSERT INTO public.journal VALUES (40, '10:01:48.974347-04', 'AJOUTER', '{}', '{gloubi, 2, no pokemon, 1}');
+INSERT INTO public.journal VALUES (41, '10:01:51.34261-04', 'AJOUTER', '{}', '{gloubi, 2, no pokemon, 1}');
+INSERT INTO public.journal VALUES (42, '10:01:51.70009-04', 'AJOUTER', '{}', '{gloubi, 2, no pokemon, 1}');
+INSERT INTO public.journal VALUES (43, '10:01:52.098601-04', 'AJOUTER', '{}', '{gloubi, 2, no pokemon, 1}');
+INSERT INTO public.journal VALUES (44, '10:01:52.432393-04', 'AJOUTER', '{}', '{gloubi, 2, no pokemon, 1}');
+INSERT INTO public.journal VALUES (45, '10:01:52.913432-04', 'AJOUTER', '{}', '{gloubi, 2, no pokemon, 1}');
+INSERT INTO public.journal VALUES (46, '10:01:53.192095-04', 'AJOUTER', '{}', '{gloubi, 2, no pokemon, 1}');
+INSERT INTO public.journal VALUES (47, '10:01:53.608944-04', 'AJOUTER', '{}', '{gloubi, 2, no pokemon, 1}');
+INSERT INTO public.journal VALUES (48, '10:03:22.040001-04', 'EFFACER', '{gloubi, 2, no pokemon, 1}', '{}');
+INSERT INTO public.journal VALUES (49, '10:03:22.040001-04', 'EFFACER', '{gloubi, 2, no pokemon, 1}', '{}');
+INSERT INTO public.journal VALUES (50, '10:03:22.040001-04', 'EFFACER', '{gloubi, 2, no pokemon, 1}', '{}');
+INSERT INTO public.journal VALUES (51, '10:03:22.040001-04', 'EFFACER', '{gloubi, 2, no pokemon, 1}', '{}');
+INSERT INTO public.journal VALUES (52, '10:03:22.040001-04', 'EFFACER', '{gloubi, 2, no pokemon, 1}', '{}');
+INSERT INTO public.journal VALUES (53, '10:03:22.040001-04', 'EFFACER', '{gloubi, 2, no pokemon, 1}', '{}');
+INSERT INTO public.journal VALUES (54, '10:03:22.040001-04', 'EFFACER', '{gloubi, 2, no pokemon, 1}', '{}');
+INSERT INTO public.journal VALUES (55, '10:03:22.040001-04', 'EFFACER', '{gloubi, 2, no pokemon, 1}', '{}');
 
 
 --
@@ -375,14 +404,14 @@ INSERT INTO public.typepokemon VALUES (17, 'Acier');
 -- Name: journal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.journal_id_seq', 39, true);
+SELECT pg_catalog.setval('public.journal_id_seq', 55, true);
 
 
 --
 -- Name: pokemon_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.pokemon_id_seq', 53, true);
+SELECT pg_catalog.setval('public.pokemon_id_seq', 61, true);
 
 
 --
