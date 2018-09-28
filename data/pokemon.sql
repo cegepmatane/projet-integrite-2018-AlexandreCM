@@ -51,6 +51,19 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
+-- Name: checksumnoms(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.checksumnoms() RETURNS text
+    LANGUAGE sql
+    AS $$
+	SELECT MD5(string_agg(nom,'-')) as checksumNoms FROM pokemon
+$$;
+
+
+ALTER FUNCTION public.checksumnoms() OWNER TO postgres;
+
+--
 -- Name: effacertype(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
