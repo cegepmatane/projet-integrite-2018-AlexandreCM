@@ -51,6 +51,27 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
+-- Name: effacertype(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.effacertype() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+
+	
+BEGIN
+	DELETE FROM pokemon WHERE idtypepokemon = OLD.id;
+	
+    return NEW;
+END
+
+
+$$;
+
+
+ALTER FUNCTION public.effacertype() OWNER TO postgres;
+
+--
 -- Name: journaliser(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -58,37 +79,71 @@ CREATE FUNCTION public.journaliser() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
 
+
+
 DECLARE 
+
     objetAvant text;
+
     objetApres text;
+
     operation text;
+
 	
+
 BEGIN
+
 	objetAvant := '{}';
+
 	objetApres := '{}';
+
 	
+
 	IF TG_OP = 'INSERT' THEN
+
    		objetApres := '{'||NEW.nom||', '||NEW.poids||', '||NEW.description||', '||NEW.idTypePokemon||'}';
+
         operation := 'AJOUTER';
+
     END IF;
+
 	IF TG_OP = 'UPDATE' THEN
+
      	objetAvant := '{'||OLD.nom||', '||OLD.poids||', '||OLD.description||', '||OLD.idTypePokemon||'}';
+
     	objetApres := '{'||NEW.nom||', '||NEW.poids||', '||NEW.description||', '||NEW.idTypePokemon||'}';
+
         operation := 'MODIFIER';
+
     END IF;
+
 	IF TG_OP = 'DELETE' THEN
+
     	objetAvant := '{'||OLD.nom||', '||OLD.poids||', '||OLD.description||', '||OLD.idTypePokemon||'}';
+
         operation := 'EFFACER';
+
     END IF;
+
 	
+
  	INSERT into journal(moment, operation, ancienobjet, nouvelobjet) VALUES(NOW(), operation, objetAvant, objetApres);
+
 	
+
 	IF TG_OP = 'DELETE' THEN
+
 		return OLD;
+
 	END IF; 
+
 	
+
     return NEW;
+
 END
+
+
 
 $$;
 
@@ -243,6 +298,33 @@ INSERT INTO public.journal VALUES (8, '22:29:17.258026-04', 'AJOUTER', '{}', '{s
 INSERT INTO public.journal VALUES (9, '22:31:15.394991-04', 'AJOUTER', '{}', '{Entei, 25.1, Lion du feu, 2}');
 INSERT INTO public.journal VALUES (10, '22:34:55.592769-04', 'MODIFIER', '{suicune, 20.2, Vent du nord, 4}', '{suicune, 20.2, Vent du nord, 3}');
 INSERT INTO public.journal VALUES (11, '22:36:18.495813-04', 'EFFACER', '{Entei, 25.1, Lion du feu, 2}', '{}');
+INSERT INTO public.journal VALUES (13, '22:51:51.445466-04', 'AJOUTER', '{}', '{test, 20, cest un test, 1}');
+INSERT INTO public.journal VALUES (14, '22:53:57.610647-04', 'MODIFIER', '{test, 20, cest un test, 1}', '{test2, 20, cest un autre test, 1}');
+INSERT INTO public.journal VALUES (15, '22:54:52.470914-04', 'EFFACER', '{test2, 20, cest un autre test, 1}', '{}');
+INSERT INTO public.journal VALUES (16, '09:49:53.065551-04', 'AJOUTER', '{}', '{test, 2, desc, 1}');
+INSERT INTO public.journal VALUES (17, '09:50:00.266202-04', 'AJOUTER', '{}', '{test, 2, desc, 1}');
+INSERT INTO public.journal VALUES (18, '09:50:01.118535-04', 'AJOUTER', '{}', '{test, 2, desc, 1}');
+INSERT INTO public.journal VALUES (19, '09:50:02.115107-04', 'AJOUTER', '{}', '{test, 2, desc, 1}');
+INSERT INTO public.journal VALUES (20, '09:50:02.902312-04', 'AJOUTER', '{}', '{test, 2, desc, 1}');
+INSERT INTO public.journal VALUES (21, '09:50:03.617391-04', 'AJOUTER', '{}', '{test, 2, desc, 1}');
+INSERT INTO public.journal VALUES (22, '09:50:04.366999-04', 'AJOUTER', '{}', '{test, 2, desc, 1}');
+INSERT INTO public.journal VALUES (23, '09:50:04.693563-04', 'AJOUTER', '{}', '{test, 2, desc, 1}');
+INSERT INTO public.journal VALUES (24, '09:50:05.401375-04', 'AJOUTER', '{}', '{test, 2, desc, 1}');
+INSERT INTO public.journal VALUES (25, '09:50:06.205759-04', 'AJOUTER', '{}', '{test, 2, desc, 1}');
+INSERT INTO public.journal VALUES (26, '09:50:06.971421-04', 'AJOUTER', '{}', '{test, 2, desc, 1}');
+INSERT INTO public.journal VALUES (27, '09:50:07.62528-04', 'AJOUTER', '{}', '{test, 2, desc, 1}');
+INSERT INTO public.journal VALUES (28, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
+INSERT INTO public.journal VALUES (29, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
+INSERT INTO public.journal VALUES (30, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
+INSERT INTO public.journal VALUES (31, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
+INSERT INTO public.journal VALUES (32, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
+INSERT INTO public.journal VALUES (33, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
+INSERT INTO public.journal VALUES (34, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
+INSERT INTO public.journal VALUES (35, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
+INSERT INTO public.journal VALUES (36, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
+INSERT INTO public.journal VALUES (37, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
+INSERT INTO public.journal VALUES (38, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
+INSERT INTO public.journal VALUES (39, '09:51:28.475293-04', 'EFFACER', '{test, 2, desc, 1}', '{}');
 
 
 --
@@ -293,14 +375,14 @@ INSERT INTO public.typepokemon VALUES (17, 'Acier');
 -- Name: journal_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.journal_id_seq', 11, true);
+SELECT pg_catalog.setval('public.journal_id_seq', 39, true);
 
 
 --
 -- Name: pokemon_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.pokemon_id_seq', 39, true);
+SELECT pg_catalog.setval('public.pokemon_id_seq', 53, true);
 
 
 --
@@ -353,6 +435,13 @@ CREATE TRIGGER evenementajouterpokemon BEFORE INSERT ON public.pokemon FOR EACH 
 --
 
 CREATE TRIGGER evenementeffacerpokemon BEFORE DELETE ON public.pokemon FOR EACH ROW EXECUTE PROCEDURE public.journaliser();
+
+
+--
+-- Name: typepokemon evenementeffacertypepokemon; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER evenementeffacertypepokemon BEFORE DELETE ON public.typepokemon FOR EACH ROW EXECUTE PROCEDURE public.effacertype();
 
 
 --
